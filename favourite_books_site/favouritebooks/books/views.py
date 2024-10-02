@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse('Главная страница Favourite books')
+    data = {'title': 'Favourite Books'}
+    return render(request, 'books/index.html', data)
 
 
