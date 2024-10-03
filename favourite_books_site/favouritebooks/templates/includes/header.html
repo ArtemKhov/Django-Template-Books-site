@@ -1,0 +1,26 @@
+{% load static %}
+
+<header>
+    <a class="logo" href="/"><img src="{% static 'books/images/logo.png' %}" alt="logo"></a>
+    <nav>
+        <ul class="nav__links">
+            {% for navbar_item in navbar %}
+                <li><a href="{% url navbar_item.url_name %}">{{navbar_item.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <button class="cta" href="#">Login</button>
+    <button class="reg cta" href="#">Register</button>
+    <button class="menu cta">Menu</button>
+
+</header>
+
+<div id="mobile__menu" class="overlay">
+    <a class="close">&times;</a>
+    <div class="overlay__content">
+        {% for navbar_item in navbar %}
+            <a href="{% url navbar_item.url_name %}">{{navbar_item.title}}</a>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'books/js/mobile.js' %}"></script>
