@@ -1,0 +1,16 @@
+{% load static %}
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href="\">Home</a></li>
+        {% for navbar_item in navbar %}
+            <li><a href="{% url navbar_item.url_name %}">{{navbar_item.title}}</a></li>
+        {% endfor %}
+    </ul>
+    <ul class="icons">
+        <li><button class="button primary login">Login</button></li>
+        <li><button class="button register">Register</button></li>
+        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+    </ul>
+</nav>
