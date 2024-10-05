@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-navbar = [{'title': "Add Post", 'url_name': 'add_post'},
+navbar = [{'title': "Add Book", 'url_name': 'add_post'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
 
