@@ -9,6 +9,7 @@ navbar = [{'title': "Add Book", 'url_name': 'add_post'},
 
 def index(request):
     posts = Book.published.all()
+    print(posts)
 
     data = {
         'title': 'Favourite Books',

@@ -17,7 +17,7 @@ class Book(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
-    genre = models.ForeignKey('Genre', on_delete=models.PROTECT)
+    genre = models.ForeignKey('Genres', on_delete=models.PROTECT)
 
     object = models.Manager()
     published = PublishedManager()
