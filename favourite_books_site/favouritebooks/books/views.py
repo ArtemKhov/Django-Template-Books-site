@@ -1,14 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from books.models import Book
+
 navbar = [{'title': "Add Book", 'url_name': 'add_post'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
 
 def index(request):
+    posts = Book.published.all()
+
     data = {
         'title': 'Favourite Books',
         'navbar': navbar,
+        'posts': posts,
     }
     return render(request, 'books/index.html', context=data)
 
