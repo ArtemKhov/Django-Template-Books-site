@@ -2,7 +2,7 @@ from django.db import models
 
 class Book(models.Model):
     '''
-    Book info
+    Book inf
     '''
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
