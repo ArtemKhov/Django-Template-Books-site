@@ -21,17 +21,24 @@
 
       <!-- Posts -->
           <section class="posts">
+              {% for book in books %}
               <article>
                   <header>
-                      <span class="date">April 24, 2017</span>
-                      <h2><a href="#">Title</a></h2>
+                      <span class="date">
+                          {{ book.time_create|date:"M" }}
+                          {{ book.time_create.day }},
+                          {{ book.time_create.year }}
+                      </span>
+                      <h2><a href="#">{{ book.title }}</a></h2>
                   </header>
                   <a href="#" class="image fit"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></a>
-                  <p>Description</p>
+                  <p>{{ book.description }}</p>
                   <ul class="actions special">
                       <li><a href="#" class="button">Read more</a></li>
                   </ul>
               </article>
+              {% endfor %}
+
           </section>
 
       <!-- Footer -->

@@ -8,13 +8,12 @@ navbar = [{'title': "Add Book", 'url_name': 'add_post'},
 ]
 
 def index(request):
-    posts = Book.published.all()
-    print(posts)
+    books = Book.object.filter(is_published=1)
 
     data = {
         'title': 'Favourite Books',
         'navbar': navbar,
-        'posts': posts,
+        'books': books,
     }
     return render(request, 'books/index.html', context=data)
 
