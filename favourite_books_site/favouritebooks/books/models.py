@@ -13,8 +13,8 @@ class Book(models.Model):
     Book info
     '''
     class Status(models.IntegerChoices):
-        DRAFT = 0, 'Draft'
         PUBLISHED = 1, 'Published'
+        DRAFT = 0, 'Draft'
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
