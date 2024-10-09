@@ -16,7 +16,7 @@
               <h2><a href="#">{{ book.title }}</a></h2>
             </header>
             <div class="image main"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></div>
-            <p> {{ book.description }}</p>
+            <p> {{ book.description|linebreaks }}</p>
         </section>
 
 {% endblock %}
