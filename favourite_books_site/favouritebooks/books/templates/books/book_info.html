@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <!-- Book Detailed Info -->
+        <section class="post">
+            <header class="major">
+                <span class="date">
+                  {{ book.time_create|date:"M" }}
+                  {{ book.time_create.day }},
+                  {{ book.time_create.year }}
+              </span>
+              <h2><a href="#">{{ book.title }}</a></h2>
+            </header>
+            <div class="image main"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></div>
+            <p> {{ book.description }}</p>
+        </section>
+
+{% endblock %}

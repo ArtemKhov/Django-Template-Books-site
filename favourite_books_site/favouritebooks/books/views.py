@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from books.models import Book
@@ -32,6 +32,16 @@ def add_book(request):
         'navbar': navbar,
     }
     return render(request, 'books/add_book.html', context=data)
+
+def show_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+
+    data = {
+        'title': book.title,
+        'navbar': navbar,
+        'book': book,
+    }
+    return render(request, 'books/book_info.html', context=data)
 
 def feedback(request):
     data = {
