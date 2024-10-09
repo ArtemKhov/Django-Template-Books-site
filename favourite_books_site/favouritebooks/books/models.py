@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django_unique_slugify import unique_slugify
 
 
 class PublishedManager(models.Manager):
@@ -40,7 +41,8 @@ class Book(models.Model):
         return reverse('book', kwargs={'book_slug': self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        slug_str = self.title
+        unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
 
 class Genres(models.Model):
