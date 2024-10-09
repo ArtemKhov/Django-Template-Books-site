@@ -17,9 +17,10 @@ class Book(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
     genre = models.ForeignKey('Genres', on_delete=models.PROTECT)
 
-    object = models.Manager()
+    objects = models.Manager()
     published = PublishedManager()
 
     def __str__(self):

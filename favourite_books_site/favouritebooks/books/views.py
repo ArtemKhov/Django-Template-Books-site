@@ -17,7 +17,7 @@ def index(request):
     return render(request, 'books/index.html', context=data)
 
 def books(request):
-    books = Book.object.filter(is_published=1)
+    books = Book.objects.filter(is_published=1)
 
     data = {
         'title': 'My Books',
@@ -33,8 +33,8 @@ def add_book(request):
     }
     return render(request, 'books/add_book.html', context=data)
 
-def show_book(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
+def show_book(request, book_slug):
+    book = get_object_or_404(Book, slug=book_slug)
 
     data = {
         'title': book.title,

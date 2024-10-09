@@ -6,5 +6,5 @@ urlpatterns = [
     path('addbook/', views.add_book, name='add_book'),
     path('feedback/', views.feedback, name='feedback'),
     path('books/', views.books, name='books'),
-    path('book/<int:book_id>/', views.show_book, name='book'),
+    path('book/<slug:book_slug>/', views.show_book, name='book'),
 ]
