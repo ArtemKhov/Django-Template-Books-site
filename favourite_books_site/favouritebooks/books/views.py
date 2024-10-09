@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from books.models import Book
 
-navbar = [{'title': "Add Book", 'url_name': 'add_post'},
+navbar = [{'title': "Add Book", 'url_name': 'add_book'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
 
@@ -26,12 +26,12 @@ def books(request):
     }
     return render(request, 'books/books.html', context=data)
 
-def add_post(request):
+def add_book(request):
     data = {
-        'title': 'Add Post',
+        'title': 'Add new book',
         'navbar': navbar,
     }
-    return render(request, 'books/add_post.html', context=data)
+    return render(request, 'books/add_book.html', context=data)
 
 def feedback(request):
     data = {
