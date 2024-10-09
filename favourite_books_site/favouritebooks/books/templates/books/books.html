@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <!-- Books -->
+    <section class="posts">
+      {% for book in books %}
+      <article>
+          <header>
+              <span class="date">
+                  {{ book.time_create|date:"M" }}
+                  {{ book.time_create.day }},
+                  {{ book.time_create.year }}
+              </span>
+              <h2><a href="#">{{ book.title }}</a></h2>
+          </header>
+          <a href="#" class="image fit"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></a>
+          <p>{{ book.description }}</p>
+          <ul class="actions special">
+              <li><a href="#" class="button">Read more</a></li>
+          </ul>
+      </article>
+      {% endfor %}
+    </section>
+
+    <!-- Pagination -->
+    <footer>
+      <div class="pagination">
+          <!--<a href="#" class="previous">Prev</a>-->
+          <a href="#" class="page active">1</a>
+          <a href="#" class="page">2</a>
+          <a href="#" class="page">3</a>
+          <span class="extra">&hellip;</span>
+          <a href="#" class="page">8</a>
+          <a href="#" class="page">9</a>
+          <a href="#" class="page">10</a>
+          <a href="#" class="next">Next</a>
+      </div>
+    </footer>
+
+{% endblock %}

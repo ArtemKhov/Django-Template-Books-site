@@ -8,7 +8,6 @@ navbar = [{'title': "Add Book", 'url_name': 'add_post'},
 ]
 
 def index(request):
-    books = Book.object.filter(is_published=1)
 
     data = {
         'title': 'Favourite Books',
@@ -17,12 +16,15 @@ def index(request):
     }
     return render(request, 'books/index.html', context=data)
 
-def about(request):
+def books(request):
+    books = Book.object.filter(is_published=1)
+
     data = {
-        'title': 'About',
+        'title': 'My Books',
         'navbar': navbar,
+        'books': books,
     }
-    return render(request, 'books/about.html', context=data)
+    return render(request, 'books/books.html', context=data)
 
 def add_post(request):
     data = {

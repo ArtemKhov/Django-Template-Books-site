@@ -6,7 +6,7 @@ class PublishedManager(models.Manager):
 
 class Book(models.Model):
     '''
-    Book inf
+    Book info
     '''
     class Status(models.IntegerChoices):
         DRAFT = 0, 'Draft'
