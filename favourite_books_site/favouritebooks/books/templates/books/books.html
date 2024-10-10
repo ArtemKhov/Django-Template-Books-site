@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load book_tags %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
+    <p>{% show_all_tags %}</p>
     <!-- Books -->
     <section class="posts">
+
       {% for book in books %}
+
       <article>
           <header>
               <span class="date">
@@ -28,6 +31,7 @@
 
     <!-- Pagination -->
     <footer>
+
       <div class="pagination">
           <!--<a href="#" class="previous">Prev</a>-->
           <a href="#" class="page active">1</a>

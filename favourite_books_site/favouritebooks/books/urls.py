@@ -7,4 +7,5 @@ urlpatterns = [
     path('feedback/', views.feedback, name='feedback'),
     path('books/', views.books, name='books'),
     path('book/<slug:book_slug>/', views.show_book, name='book'),
+    path('tag/<slug:tag_slug>/', views.show_book_tags, name='tag'),
 ]

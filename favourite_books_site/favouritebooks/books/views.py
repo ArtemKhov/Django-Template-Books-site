@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
-from books.models import Book
+from books.models import Book, Genres
 
 navbar = [{'title': "Add Book", 'url_name': 'add_book'},
         {'title': "Feedback", 'url_name': 'feedback'},
@@ -49,6 +49,18 @@ def feedback(request):
         'navbar': navbar,
     }
     return render(request, 'books/feedback.html', context=data)
+
+def show_book_tags(request, tag_slug):
+    tag = get_object_or_404(Genres, slug=tag_slug)
+    books = tag.genres.filter(is_published=Book.Status.PUBLISHED)
+
+    data = {
+        'title': f'Tag: {tag.genre}',
+        'navbar': navbar,
+        'books': books,
+    }
+
+    return render(request, 'books/books.html', context=data)
 
 
 

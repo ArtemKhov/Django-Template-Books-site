@@ -51,6 +51,9 @@ class Genres(models.Model):
     def __str__(self):
         return self.genre
 
+    def get_absolute_url(self):
+        return reverse('tag', kwargs={'tag_slug': self.slug})
+
     def save(self, *args, **kwargs):
         slug_str = self.genre
         unique_slugify(self, slug_str)
