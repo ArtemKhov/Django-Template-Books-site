@@ -1,5 +1,4 @@
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django_unique_slugify import unique_slugify
 
@@ -23,7 +22,7 @@ class Book(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    genre = models.ForeignKey('Genres', on_delete=models.PROTECT)
+    genre = models.ManyToManyField('Genres', blank=True, related_name='genres')
 
     objects = models.Manager()
     published = PublishedManager()
