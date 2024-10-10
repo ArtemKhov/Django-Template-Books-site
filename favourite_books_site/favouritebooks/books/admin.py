@@ -6,4 +6,6 @@ class BookAdmin(admin.ModelAdmin):
     readonly_fields = ['slug']
 
 
-admin.site.register(Genres)
+@admin.register(Genres)
+class GenresAdmin(admin.ModelAdmin):
+    readonly_fields = ['slug']

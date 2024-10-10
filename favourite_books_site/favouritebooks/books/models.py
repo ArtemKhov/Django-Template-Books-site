@@ -51,6 +51,11 @@ class Genres(models.Model):
     def __str__(self):
         return self.genre
 
+    def save(self, *args, **kwargs):
+        slug_str = self.genre
+        unique_slugify(self, slug_str)
+        super().save(*args, **kwargs)
+
 
 
 
