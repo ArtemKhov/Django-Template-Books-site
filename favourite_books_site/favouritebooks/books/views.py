@@ -52,10 +52,12 @@ def feedback(request):
 
 def show_book_tags(request, tag_slug):
     tag = get_object_or_404(Genres, slug=tag_slug)
+    print(tag)
     books = tag.genres.filter(is_published=Book.Status.PUBLISHED)
+    print(books)
 
     data = {
-        'title': f'Tag: {tag.genre}',
+        'title': f'Genre: {tag.genre}',
         'navbar': navbar,
         'books': books,
     }

@@ -2810,12 +2810,18 @@ input, select, textarea {
 
 		}
 
+/* Genres */
+    .genres {
+        font-size: 12px;
+    }
+
 /* Icons */
 
 	ul.icons {
 		cursor: default;
 		list-style: none;
 		padding-left: 0;
+
 	}
 
 		ul.icons li {

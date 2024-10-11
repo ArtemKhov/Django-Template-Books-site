@@ -5,7 +5,10 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <p>{% show_all_tags %}</p>
+
+    <!-- Show all genres (tags) -->
+    {% show_all_tags %}
+
     <!-- Books -->
     <section class="posts">
 
