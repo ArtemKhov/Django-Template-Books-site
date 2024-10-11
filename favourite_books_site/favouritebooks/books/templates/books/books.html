@@ -21,10 +21,10 @@
                   {{ book.time_create.day }},
                   {{ book.time_create.year }}
               </span>
-              <h2><a href="#">{{ book.title }}</a></h2>
+              <h2><a href="{{ book.get_absolute_url }}">{{ book.title|truncatechars:35 }}</a></h2>
           </header>
           <a href="#" class="image fit"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></a>
-          <p>{{ book.description|linebreaks|truncatewords:20 }}</p>
+          <p>{{ book.description|linebreaks|truncatewords:25 }}</p>
           <ul class="actions special">
               <li><a href="{{ book.get_absolute_url }}" class="button">Read more</a></li>
           </ul>
