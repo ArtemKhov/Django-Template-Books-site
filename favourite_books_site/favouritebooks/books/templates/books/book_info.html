@@ -28,7 +28,7 @@
         {% if book_genres %}
             <ul class="icons alt">
                 <p class="book_genre">This book belongs to the genres:</p>
-                {% for genre in book_genres %}
+                {% for genre in book_genres|dictsort:"genre" %}
                 <li><a class="genres" href="{{ genre.get_absolute_url }}">{{ genre.genre }}</a></li>
                 {% endfor %}
             </ul>

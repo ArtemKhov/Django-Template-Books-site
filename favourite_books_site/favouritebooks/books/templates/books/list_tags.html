@@ -1,6 +1,6 @@
 {% if tags %}
     <ul class="icons alt">
-        {% for tag in tags %}
+        {% for tag in tags|dictsort:"genre" %}
         <li><a class="genres" href="{{ tag.get_absolute_url }}">{{ tag.genre }}</a></li>
         {% endfor %}
     </ul>
