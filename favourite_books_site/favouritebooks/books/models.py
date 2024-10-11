@@ -22,7 +22,7 @@ class Book(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    genre = models.ManyToManyField('Genres', blank=True, related_name='genres')
+    genres = models.ManyToManyField('Genres', blank=True, related_name='genres')
 
     objects = models.Manager()
     published = PublishedManager()

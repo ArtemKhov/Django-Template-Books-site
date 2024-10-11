@@ -2815,6 +2815,11 @@ input, select, textarea {
         font-size: 12px;
     }
 
+    .book_genre{
+        font-size: 12px;
+        margin: 0;
+    }
+
 /* Icons */
 
 	ul.icons {

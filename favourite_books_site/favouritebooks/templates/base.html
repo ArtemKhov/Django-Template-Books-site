@@ -24,7 +24,8 @@
 			{% include 'includes/nav.html' %}
 
             <div id="main">
-			{% block content %}{% endblock %}
+			    {% block content %}{% endblock %}
+                {% block breadcrumbs%}{% endblock %}
             </div>
 
             {% block feedback %}{% endblock %}

@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.inclusion_tag('books/list_tags.html')
 def show_all_tags():
-    return {'tags': Genres.objects.all()}
+    return {'tags': Genres.objects.all(), }

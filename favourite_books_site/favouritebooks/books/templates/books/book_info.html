@@ -3,6 +3,7 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+
 {% block content %}
 
     <!-- Book Detailed Info -->
@@ -20,3 +21,17 @@
         </section>
 
 {% endblock %}
+
+{% block breadcrumbs %}
+    {% with book.genres.all as book_genres %}
+        {% if book_genres %}
+            <ul class="icons alt">
+                <p class="book_genre">This book belongs to the genres:</p>
+                {% for genre in book_genres %}
+                <li><a class="genres" href="{{ genre.get_absolute_url }}">{{ genre.genre }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+

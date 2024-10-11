@@ -54,7 +54,7 @@ def show_book_tags(request, tag_slug):
     tag = get_object_or_404(Genres, slug=tag_slug)
     print(tag)
     books = tag.genres.filter(is_published=Book.Status.PUBLISHED)
-    print(books)
+    print(len(books))
 
     data = {
         'title': f'Genre: {tag.genre}',
