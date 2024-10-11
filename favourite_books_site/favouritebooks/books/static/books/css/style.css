@@ -2055,6 +2055,26 @@ input, select, textarea {
 
 /* Button */
 
+    #file-upload {
+        display: none;
+    }
+
+    .custom-file-upload {
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .custom-file-upload span {
+      color: #333;
+      font-size: 14px;
+      text-align: center;
+      padding: 10px 0;
+    }
+
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
@@ -2076,7 +2096,6 @@ input, select, textarea {
 		font-size: 0.8rem;
 		font-weight: 900;
 		letter-spacing: 0.075em;
-		height: 3rem;
 		line-height: 3rem;
 		padding: 0 2rem;
 		text-align: center;

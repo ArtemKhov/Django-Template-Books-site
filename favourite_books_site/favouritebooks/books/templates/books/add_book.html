@@ -4,5 +4,53 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <h3>{{ title }}</h3>
+    <h2>Add new book</h2>
+
+    <form method="post" action="#">
+        {% csrf_token %}
+
+        <div class="row gtr-uniform">
+            <div class="col-12">
+                <label for="name">Book name*</label>
+                <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <label for="book-descr">Book Description</label>
+                <textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <select name="demo-category" id="demo-category">
+                    <option value="">- Genres -</option>
+                    <option value="1">Manufacturing</option>
+                    <option value="1">Shipping</option>
+                    <option value="1">Administration</option>
+                    <option value="1">Human Resources</option>
+                </select>
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <select name="demo-category" id="publ">
+                    <option value="">- Published -</option>
+                </select>
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <label for="book-descr">Book image</label>
+                <label class="button icon solid fa-download custom-file-upload">
+                  <span>Upload Image</span>
+                  <input type="file" id="file-upload" style="visibility:hidden;">
+                </label>
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message" class="primary" /></li>
+                    <li><input type="reset" value="Reset" /></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
 {% endblock %}
