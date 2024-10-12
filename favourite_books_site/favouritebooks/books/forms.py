@@ -4,14 +4,13 @@ from django.core.exceptions import ValidationError
 from .models import Book, Genres
 
 class AddBookForm(forms.ModelForm):
-    genres = forms.ModelChoiceField(queryset=Genres.objects.all().order_by('genre'),
+    genres = forms.ModelMultipleChoiceField(queryset=Genres.objects.all().order_by('genre'),
                                     label='Genres',
-                                    empty_label=None,
                                     widget=forms.SelectMultiple(attrs={'class': 'genres-option'}))
 
     class Meta:
         model = Book
-        fields = ['title', 'description', 'is_published']
+        fields = ['title', 'description', 'is_published', 'genres', 'image']
         labels = {
             'title': 'Book name',
         }

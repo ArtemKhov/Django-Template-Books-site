@@ -29,7 +29,7 @@ def books(request):
 
 def add_book(request):
     if request.method == 'POST':
-        form = AddBookForm(request.POST)
+        form = AddBookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('books')
@@ -62,9 +62,7 @@ def feedback(request):
 
 def show_book_tags(request, tag_slug):
     tag = get_object_or_404(Genres, slug=tag_slug)
-    print(tag)
     books = tag.genres.filter(is_published=Book.Status.PUBLISHED)
-    print(len(books))
 
     data = {
         'title': f'Genre: {tag.genre}',

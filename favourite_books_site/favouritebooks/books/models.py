@@ -23,6 +23,11 @@ class Book(models.Model):
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
     genres = models.ManyToManyField('Genres', blank=True, related_name='genres')
+    image = models.ImageField(upload_to='book_images/%Y/%m/%d/',
+                              default=None,
+                              blank=True,
+                              null=True,
+                              verbose_name='Book Image')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -58,7 +63,6 @@ class Genres(models.Model):
         slug_str = self.genre
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
-
 
 
 
