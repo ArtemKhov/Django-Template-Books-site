@@ -8,49 +8,38 @@
 
     <form method="post" action="#">
         {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors}}</div>
 
-        <div class="row gtr-uniform">
-            <div class="col-12">
-                <label for="name">Book name*</label>
-                <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-            </div>
-            <!-- Break -->
-            <div class="col-12">
-                <label for="book-descr">Book Description</label>
-                <textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-            </div>
-            <!-- Break -->
-            <div class="col-12">
-                <select name="demo-category" id="demo-category">
-                    <option value="">- Genres -</option>
-                    <option value="1">Manufacturing</option>
-                    <option value="1">Shipping</option>
-                    <option value="1">Administration</option>
-                    <option value="1">Human Resources</option>
-                </select>
-            </div>
-            <!-- Break -->
-            <div class="col-12">
-                <select name="demo-category" id="publ">
-                    <option value="">- Published -</option>
-                </select>
-            </div>
-            <!-- Break -->
-            <div class="col-12">
-                <label for="book-descr">Book image</label>
-                <label class="button icon solid fa-download custom-file-upload">
-                  <span>Upload Image</span>
-                  <input type="file" id="file-upload" style="visibility:hidden;">
-                </label>
-            </div>
-            <!-- Break -->
-            <div class="col-12">
-                <ul class="actions">
-                    <li><input type="submit" value="Send Message" class="primary" /></li>
-                    <li><input type="reset" value="Reset" /></li>
-                </ul>
-            </div>
+        <!-- Correct show error for 'Book name' field  -->
+        <p class="error-title "><label class="form-label"> {{ form.title.label }}</label> {{ form.title }}</p>
+        <div class="form-error">{{ form.title.errors }}</div>
+
+        <!-- Skip 'Book name' field and starting loop from 'Description' field -->
+        {% for form_item in form %}
+            {% if forloop.counter > 1 %}
+                <p><label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>{{ form_item }}</p>
+                <div class="form-error">{{ form_item.errors }}</div>
+            {% endif %}
+        {% endfor %}
+
+
+
+        <!-- Image -->
+        <div class="col-12">
+            <label for="book-descr">Book image</label>
+            <label class="button icon solid fa-download custom-file-upload">
+              <span>Upload Image</span>
+              <input type="file" id="file-upload" style="visibility:hidden;">
+            </label>
         </div>
+
+        <!-- Buttons -->
+        <div class="col-12">
+            <ul class="actions form-button">
+                <li><input type="submit" value="Send Message" class="primary" /></li>
+            </ul>
+        </div>
+
     </form>
 
 {% endblock %}

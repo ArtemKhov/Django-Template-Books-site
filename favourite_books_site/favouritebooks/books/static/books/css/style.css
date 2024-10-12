@@ -2719,6 +2719,9 @@ input, select, textarea {
 		margin-left: -1rem;
 		padding-left: 0;
 	}
+	    ul.actions.form-button {
+	        margin-top: 30px;
+	    }
 
 		ul.actions li {
 			padding: 0 0 0 1rem;
@@ -2837,6 +2840,12 @@ input, select, textarea {
     .book_genre{
         font-size: 12px;
         margin: 0;
+    }
+
+/* Book Title */
+
+    .book-title {
+        word-wrap: break-word;
     }
 
 /* Icons */
@@ -3140,6 +3149,18 @@ input, select, textarea {
 	table.alt tbody tr td {
 		border-color: #eeeeee;
 	}
+
+/* Errors*/
+
+    .errorlist {
+        list-style-type: none;
+        color: #FF4040;
+        font-size: 12px;
+    }
+
+    .error-title {
+        margin: 0 0 0 0;
+    }
 
 /* Pagination */
 
