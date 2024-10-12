@@ -14,15 +14,17 @@
         <p class="error-title"><label class="form-label"> {{ form.title.label }}</label> {{ form.title }}</p>
         <div class="form-error">{{ form.title.errors }}</div>
 
-        <!-- Skip 'Book name' field and starting loop from 'Description' field -->
+        <!-- Description  -->
+        <p class="description"><label class="form-label"> {{ form.description.label }}</label> {{ form.description }}</p>
+        <div class="form-error">{{ form.description.errors }}</div>
+
+        <!-- Skip 'Book name' and 'Description' field and starting loop from 'Published' field -->
         {% for form_item in form %}
-            {% if forloop.counter > 1 %}
+            {% if forloop.counter > 2 %}
                 <p><label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>{{ form_item }}</p>
                 <div class="form-error">{{ form_item.errors }}</div>
             {% endif %}
         {% endfor %}
-
-
 
         <!-- Image -->
         <div class="col-12">
