@@ -2848,6 +2848,12 @@ input, select, textarea {
         word-wrap: break-word;
     }
 
+/* Genres Option Select */
+    select.genres-option {
+        height: 300px;
+        background-image: none;
+    }
+
 /* Icons */
 
 	ul.icons {
