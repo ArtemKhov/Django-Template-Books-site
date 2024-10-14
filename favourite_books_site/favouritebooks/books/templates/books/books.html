@@ -23,7 +23,15 @@
               </span>
               <h2 class="book-title"><a href="{{ book.get_absolute_url }}">{{ book.title|truncatechars:35 }}</a></h2>
           </header>
-          <a href="#" class="image fit"><img src="{% static 'books/images/pic02.jpg' %}" alt="" /></a>
+          {% if book.image %}
+          <a href="{{ book.get_absolute_url }}" class="image fit">
+              <img src="{{ book.image.url }}" alt="book image" />
+          </a>
+          {% else %}
+          <a href="{{ book.get_absolute_url }}" class="image fit">
+              <img src="{% static 'books/images/default_book_image.jpg' %}" alt="book image" />
+          </a>
+          {% endif %}
           <p>{{ book.description|linebreaks|truncatewords:25 }}</p>
           <ul class="actions special">
               <li><a href="{{ book.get_absolute_url }}" class="button">Read more</a></li>

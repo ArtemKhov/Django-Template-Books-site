@@ -2673,6 +2673,16 @@ input, select, textarea {
 			width: 100%;
 		}
 
+		.image.main.book {
+			display: block;
+			margin: 4rem 0;
+			width: 50%;
+			max-width:500px;
+            max-height:1000px;
+            margin-left: auto;
+            margin-right: auto;
+		}
+
 			.image.main:first-child {
 				margin-top: 0;
 			}

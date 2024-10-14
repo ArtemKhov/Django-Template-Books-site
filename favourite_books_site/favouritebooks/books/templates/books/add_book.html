@@ -26,6 +26,7 @@
                     {{ form_item }}
                 </p>
                 <div class="form-error">{{ form_item.errors }}</div>
+            <!-- Show Image Button -->
             {% elif  forloop.counter == 5 %}
                 <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
                 <label class="button icon solid fa-download custom-file-upload">
@@ -35,16 +36,6 @@
                 <div class="form-error">{{ form_item.errors }}</div>
             {% endif %}
         {% endfor %}
-
-
-<!--        &lt;!&ndash; Image &ndash;&gt;-->
-<!--        <div class="col-12">-->
-<!--            <label for="book-descr">Book image</label>-->
-<!--            <label class="button icon solid fa-download custom-file-upload">-->
-<!--              <span>Upload Image</span>-->
-<!--              <input type="file" id="file-upload" style="visibility:hidden;">-->
-<!--            </label>-->
-<!--        </div>-->
 
         <!-- Buttons -->
         <div class="col-12">
