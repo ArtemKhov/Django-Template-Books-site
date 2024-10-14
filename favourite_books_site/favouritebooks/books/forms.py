@@ -16,7 +16,8 @@ class AddBookForm(forms.ModelForm):
         }
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Name'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Opinion about the book', 'class': 'description-form'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Opinion about the book'}),
+            'image': forms.FileInput(attrs={'id':'file-upload'}),
         }
 
     def clean_title(self):

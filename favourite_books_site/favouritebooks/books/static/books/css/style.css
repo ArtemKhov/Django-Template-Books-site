@@ -2066,6 +2066,10 @@ input, select, textarea {
       background-color: #f0f0f0;
       border: 1px solid #ccc;
       border-radius: 4px;
+      max-width: 300px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
     }
 
     .custom-file-upload span {

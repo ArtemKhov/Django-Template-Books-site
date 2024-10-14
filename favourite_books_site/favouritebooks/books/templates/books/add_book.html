@@ -20,20 +20,31 @@
 
         <!-- Skip 'Book name' and 'Description' field and starting loop from 'Published' field -->
         {% for form_item in form %}
-            {% if forloop.counter > 2 %}
-                <p><label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>{{ form_item }}</p>
+            {% if forloop.counter > 2 and forloop.counter != 5 %}
+                <p>
+                    <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
+                    {{ form_item }}
+                </p>
+                <div class="form-error">{{ form_item.errors }}</div>
+            {% elif  forloop.counter == 5 %}
+                <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
+                <label class="button icon solid fa-download custom-file-upload">
+                    <span>Upload Image</span>
+                    {{ form_item }}
+                </label>
                 <div class="form-error">{{ form_item.errors }}</div>
             {% endif %}
         {% endfor %}
 
-        <!-- Image -->
-        <div class="col-12">
-            <label for="book-descr">Book image</label>
-            <label class="button icon solid fa-download custom-file-upload">
-              <span>Upload Image</span>
-              <input type="file" id="file-upload" style="visibility:hidden;">
-            </label>
-        </div>
+
+<!--        &lt;!&ndash; Image &ndash;&gt;-->
+<!--        <div class="col-12">-->
+<!--            <label for="book-descr">Book image</label>-->
+<!--            <label class="button icon solid fa-download custom-file-upload">-->
+<!--              <span>Upload Image</span>-->
+<!--              <input type="file" id="file-upload" style="visibility:hidden;">-->
+<!--            </label>-->
+<!--        </div>-->
 
         <!-- Buttons -->
         <div class="col-12">
