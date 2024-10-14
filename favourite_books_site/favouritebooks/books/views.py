@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from books.forms import AddBookForm
 from books.models import Book, Genres
 
-navbar = [{'title': "Add Book", 'url_name': 'add_book'},
+navbar = [{'title': "Home", 'url_name': 'home'},
+        {'title': "Add Book", 'url_name': 'add_book'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
 

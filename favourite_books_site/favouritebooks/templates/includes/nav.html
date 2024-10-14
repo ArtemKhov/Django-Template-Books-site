@@ -2,7 +2,6 @@
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href="\">Home</a></li>
         {% for navbar_item in navbar %}
             <li><a href="{% url navbar_item.url_name %}">{{navbar_item.title}}</a></li>
         {% endfor %}
