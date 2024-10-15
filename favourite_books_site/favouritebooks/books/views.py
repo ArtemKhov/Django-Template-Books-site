@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 from books.forms import AddBookForm
 from books.models import Book, Genres
@@ -9,14 +10,16 @@ navbar = [{'title': "Home", 'url_name': 'home'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
 
-def index(request):
 
-    data = {
+class BookMainPage(TemplateView):
+    template_name = 'books/index.html'
+
+    books = Book.objects.filter(is_published=1)
+    extra_context = {
         'title': 'Favourite Books',
         'navbar': navbar,
         'books': books,
     }
-    return render(request, 'books/index.html', context=data)
 
 def books(request):
     books = Book.objects.filter(is_published=1)
