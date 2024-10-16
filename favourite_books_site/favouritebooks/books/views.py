@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from books.forms import AddBookForm
 from books.models import Book, Genres
@@ -21,15 +21,17 @@ class BookMainPage(TemplateView):
         'books': books,
     }
 
-def books(request):
-    books = Book.objects.filter(is_published=1)
 
-    data = {
+class AddBook(ListView):
+    template_name = 'books/books.html'
+    context_object_name = 'books'
+    extra_context = {
         'title': 'My Books',
         'navbar': navbar,
-        'books': books,
     }
-    return render(request, 'books/books.html', context=data)
+
+    def get_queryset(self):
+        return Book.objects.filter(is_published=1)
 
 def add_book(request):
     if request.method == 'POST':
