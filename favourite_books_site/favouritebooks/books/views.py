@@ -5,59 +5,45 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 
 from books.forms import AddBookForm
 from books.models import Book, Genres
-
-navbar = [{'title': "Home", 'url_name': 'home'},
-        {'title': "Add Book", 'url_name': 'add_book'},
-        {'title': "Feedback", 'url_name': 'feedback'},
-]
+from books.utils import DataMixin
 
 
-class BookMainPage(TemplateView):
+class BookMainPage(DataMixin, TemplateView):
     template_name = 'books/index.html'
+    page_title = 'Favourite Books'
 
     books = Book.objects.filter(is_published=1)
     extra_context = {
-        'title': 'Favourite Books',
-        'navbar': navbar,
         'books': books,
     }
 
-class AllPublishedBooks(ListView):
+class AllPublishedBooks(DataMixin, ListView):
     template_name = 'books/books.html'
     context_object_name = 'books'
-    extra_context = {
-        'title': 'My Books',
-        'navbar': navbar,
-    }
+    page_title = 'My Books'
 
     def get_queryset(self):
         return Book.objects.filter(is_published=1)
 
 
-class AddBook(FormView):
+class AddBook(DataMixin, FormView):
     form_class = AddBookForm
     template_name = 'books/add_book.html'
+    page_title = 'Add new book'
     success_url = reverse_lazy('books')
-
-    extra_context = {
-        'title': 'Add new book',
-        'navbar': navbar,
-    }
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
 
-class DetailedBookInfo(DetailView):
+class DetailedBookInfo(DataMixin, DetailView):
     template_name = 'books/book_info.html'
     slug_url_kwarg = 'book_slug'
     context_object_name = 'book'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['book'].title
-        context['navbar'] = navbar
-        return context
+        return self.get_mixin_context(context, title=context['book'].title)
 
     # show only published Book and return book's slug according to url (book/<slug:book_slug>/)
     def get_object(self, queryset=None):
@@ -66,7 +52,7 @@ class DetailedBookInfo(DetailView):
 def feedback(request):
     data = {
         'title': 'Feedback',
-        'navbar': navbar,
+
     }
     return render(request, 'books/feedback.html', context=data)
 
@@ -76,7 +62,6 @@ def show_book_tags(request, tag_slug):
 
     data = {
         'title': f'Genre: {tag.genre}',
-        'navbar': navbar,
         'books': books,
     }
 
