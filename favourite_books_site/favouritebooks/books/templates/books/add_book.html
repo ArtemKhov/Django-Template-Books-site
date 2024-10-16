@@ -10,7 +10,7 @@
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors}}</div>
 
-        <!-- Correct show error for 'Book name' field  -->
+        <!-- Show Book name field and correct show error for 'Book name' field  -->
         <p class="error-title"><label class="form-label"> {{ form.title.label }}</label> {{ form.title }}</p>
         <div class="form-error">{{ form.title.errors }}</div>
 
@@ -26,6 +26,7 @@
                     {{ form_item }}
                 </p>
                 <div class="form-error">{{ form_item.errors }}</div>
+
             <!-- Show Image Button -->
             {% elif  forloop.counter == 5 %}
                 <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>

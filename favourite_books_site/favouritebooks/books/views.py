@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 
 from books.forms import AddBookForm
 from books.models import Book, Genres
@@ -21,7 +22,6 @@ class BookMainPage(TemplateView):
         'books': books,
     }
 
-
 class AllPublishedBooks(ListView):
     template_name = 'books/books.html'
     context_object_name = 'books'
@@ -33,22 +33,20 @@ class AllPublishedBooks(ListView):
     def get_queryset(self):
         return Book.objects.filter(is_published=1)
 
-def add_book(request):
-    if request.method == 'POST':
-        form = AddBookForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('books')
-    else:
-        form = AddBookForm()
 
-    data = {
+class AddBook(FormView):
+    form_class = AddBookForm
+    template_name = 'books/add_book.html'
+    success_url = reverse_lazy('books')
+
+    extra_context = {
         'title': 'Add new book',
         'navbar': navbar,
-        'form': form,
     }
-    return render(request, 'books/add_book.html', context=data)
 
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 class DetailedBookInfo(DetailView):
     template_name = 'books/book_info.html'
