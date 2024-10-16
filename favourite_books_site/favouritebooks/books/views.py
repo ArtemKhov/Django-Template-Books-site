@@ -56,16 +56,17 @@ def feedback(request):
     }
     return render(request, 'books/feedback.html', context=data)
 
-def show_book_tags(request, tag_slug):
-    tag = get_object_or_404(Genres, slug=tag_slug)
-    books = tag.genres.filter(is_published=Book.Status.PUBLISHED)
+class BookGenres(DataMixin, ListView):
+    template_name = 'books/books.html'
+    context_object_name = 'books'
 
-    data = {
-        'title': f'Genre: {tag.genre}',
-        'books': books,
-    }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = Genres.objects.get(slug=self.kwargs['tag_slug'])
+        return self.get_mixin_context(context, title='Genre: ' + tag.genre)
 
-    return render(request, 'books/books.html', context=data)
+    def get_queryset(self):
+        return Book.published.filter(genres__slug=self.kwargs['tag_slug']).prefetch_related('genres')
 
 
 

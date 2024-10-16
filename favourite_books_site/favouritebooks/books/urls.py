@@ -7,5 +7,5 @@ urlpatterns = [
     path('feedback/', views.feedback, name='feedback'),
     path('books/', views.AllPublishedBooks.as_view(), name='books'),
     path('book/<slug:book_slug>/', views.DetailedBookInfo.as_view(), name='book'),
-    path('tag/<slug:tag_slug>/', views.show_book_tags, name='tag'),
+    path('tag/<slug:tag_slug>/', views.BookGenres.as_view(), name='tag'),
 ]
