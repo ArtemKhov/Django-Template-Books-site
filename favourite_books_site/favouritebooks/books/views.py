@@ -61,6 +61,7 @@ class DetailedBookInfo(DetailView):
         context['navbar'] = navbar
         return context
 
+    # show only published Book and return book's slug according to url (book/<slug:book_slug>/)
     def get_object(self, queryset=None):
         return get_object_or_404(Book.published, slug=self.kwargs[self.slug_url_kwarg])
 
