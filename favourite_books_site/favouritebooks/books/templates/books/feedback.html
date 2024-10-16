@@ -4,26 +4,26 @@
 
 {% block content %}
 
-        <section class="feedback">
-            <form method="post" action="#">
-                <div class="fields">
-                    <div class="field">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" />
-                    </div>
-                    <div class="field">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" />
-                    </div>
-                    <div class="field">
-                        <label for="message">Message</label>
-                        <textarea name="message" id="message" rows="3"></textarea>
-                    </div>
-                </div>
-                <ul class="actions">
-                    <li><input type="submit" value="Send Feedback" /></li>
-                </ul>
-            </form>
-        </section>
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <div class="form-error">{{ form.non_field_errors}}</div>
+
+        {% for form_item in form %}
+            <p>
+                <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
+                {{ form_item }}
+            </p>
+            <div class="form-error">{{ form_item.errors }}</div>
+        {% endfor %}
+
+        <!-- Buttons -->
+        <div class="col-12">
+            <ul class="actions form-button">
+                <li><input type="submit" value="Send Feedback" class="primary" /></li>
+            </ul>
+        </div>
+
+    </form>
 
 {% endblock %}

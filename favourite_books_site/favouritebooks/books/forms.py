@@ -27,3 +27,12 @@ class AddBookForm(forms.ModelForm):
             raise ValidationError(f'The length of the Book name cannot exceed {title_length} characters')
 
         return title
+
+class FeedbackForm(forms.Form):
+    name = forms.CharField(label='Name',
+                           max_length=255,
+                           widget=forms.TextInput(attrs={'placeholder': 'Your name'}))
+    email = forms.EmailField(label='Email',
+                             widget=forms.TextInput(attrs={'placeholder': 'Your Email'}))
+    content = forms.CharField(label='Message',
+                              widget=forms.Textarea(attrs={'placeholder': 'Provide feedback in this field'}))

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 
-from books.forms import AddBookForm
+from books.forms import AddBookForm, FeedbackForm
 from books.models import Book, Genres
 from books.utils import DataMixin
 
@@ -49,12 +49,15 @@ class DetailedBookInfo(DataMixin, DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Book.published, slug=self.kwargs[self.slug_url_kwarg])
 
-def feedback(request):
-    data = {
-        'title': 'Feedback',
+class Feedback(DataMixin, FormView):
+    form_class = FeedbackForm
+    template_name = 'books/feedback.html'
+    page_title = 'Feedback'
+    success_url = reverse_lazy('home')
 
-    }
-    return render(request, 'books/feedback.html', context=data)
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
 
 class BookGenres(DataMixin, ListView):
     template_name = 'books/books.html'
