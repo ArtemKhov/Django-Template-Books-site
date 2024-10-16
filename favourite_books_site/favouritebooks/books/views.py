@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from books.forms import AddBookForm
 from books.models import Book, Genres
@@ -22,7 +22,7 @@ class BookMainPage(TemplateView):
     }
 
 
-class AddBook(ListView):
+class AllPublishedBooks(ListView):
     template_name = 'books/books.html'
     context_object_name = 'books'
     extra_context = {
@@ -49,15 +49,20 @@ def add_book(request):
     }
     return render(request, 'books/add_book.html', context=data)
 
-def show_book(request, book_slug):
-    book = get_object_or_404(Book, slug=book_slug)
 
-    data = {
-        'title': book.title,
-        'navbar': navbar,
-        'book': book,
-    }
-    return render(request, 'books/book_info.html', context=data)
+class DetailedBookInfo(DetailView):
+    template_name = 'books/book_info.html'
+    slug_url_kwarg = 'book_slug'
+    context_object_name = 'book'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['book'].title
+        context['navbar'] = navbar
+        return context
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Book.published, slug=self.kwargs[self.slug_url_kwarg])
 
 def feedback(request):
     data = {
