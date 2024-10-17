@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -6,6 +7,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 from books.forms import AddBookForm, FeedbackForm
 from books.models import Book, Genres
 from books.utils import DataMixin
+from favouritebooks import settings
 
 
 class BookMainPage(DataMixin, TemplateView):
@@ -56,8 +58,25 @@ class Feedback(DataMixin, FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        print(form.cleaned_data)
+        # print(form.cleaned_data)
+
+        user_email = form.cleaned_data.get('email')
+        user_name = form.cleaned_data.get('name')
+        user_message = form.cleaned_data.get('content')
+
+        subject = f'Feedback from {user_email}'
+        message = f'User name: {user_name}\nEmail: {user_email}\nMessage: {user_message}'
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[settings.EMAIL_HOST_USER],
+            reply_to=[user_email],
+        )
+        email.send(fail_silently=False)
         return super().form_valid(form)
+
 
 class BookGenres(DataMixin, ListView):
     template_name = 'books/books.html'
