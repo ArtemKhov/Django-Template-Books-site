@@ -1,4 +1,4 @@
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -55,7 +55,7 @@ class Feedback(DataMixin, FormView):
     form_class = FeedbackForm
     template_name = 'books/feedback.html'
     page_title = 'Feedback'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('feedback_success')
 
     def form_valid(self, form):
         # print(form.cleaned_data)
@@ -77,6 +77,9 @@ class Feedback(DataMixin, FormView):
         email.send(fail_silently=False)
         return super().form_valid(form)
 
+class FeedbackSuccess(DataMixin, TemplateView):
+    template_name = 'books/feedback_success.html'
+    page_title = 'Success'
 
 class BookGenres(DataMixin, ListView):
     template_name = 'books/books.html'

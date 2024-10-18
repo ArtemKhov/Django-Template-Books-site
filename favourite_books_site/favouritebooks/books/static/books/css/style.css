@@ -2872,6 +2872,17 @@ input, select, textarea {
         margin-top: 15px;
     }
 
+/* Feedback-success */
+    .feedback-success {
+        text-align:center;
+    }
+
+/* Back home-button */
+    #main > .backhome-button {
+        border-top: 0px;
+        padding: 2rem 4rem 3rem 4rem;
+    }
+
 /* Icons */
 
 	ul.icons {
