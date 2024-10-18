@@ -16,7 +16,8 @@ class Book(models.Model):
         PUBLISHED = 1, 'Published'
         DRAFT = 0, 'Draft'
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255,
+                             verbose_name='Book name')
     description = models.TextField(blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)

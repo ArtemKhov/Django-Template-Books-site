@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <p class="feedback-success">The book {{ book.title }} has been successfully edited.</p>
+
+    <ul class="actions special backhome-button">
+          <li><a href="{% url 'books' %}" class="button large">Return to my books</a></li>
+    </ul>
+
+{% endblock %}

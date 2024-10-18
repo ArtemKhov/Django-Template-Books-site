@@ -2857,9 +2857,13 @@ input, select, textarea {
     }
 
 /* Book Title */
-
     .book-title {
         word-wrap: break-word;
+    }
+
+/* Book Published Date */
+    header.major > .date.book-info {
+        margin: 0;
     }
 
 /* Options */
@@ -2877,10 +2881,20 @@ input, select, textarea {
         text-align:center;
     }
 
-/* Back home-button */
+/* Back home button */
     #main > .backhome-button {
         border-top: 0px;
         padding: 2rem 4rem 3rem 4rem;
+    }
+
+/* Edit book button */
+    #main > .edit-book-button {
+        border-top: 0px;
+        padding: 0rem 4rem 3rem 4rem;
+    }
+
+    ul.actions.special.edit-book-button{
+        justify-content: end;
     }
 
 /* Icons */

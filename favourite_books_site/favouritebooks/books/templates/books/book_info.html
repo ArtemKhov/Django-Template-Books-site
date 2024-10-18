@@ -6,15 +6,20 @@
 
 {% block content %}
 
-    <!-- Book Detailed Info -->
+        <!-- Book Detailed Info -->
         <section class="post">
             <header class="major">
-                <span class="date">
+                <span class="date book-info">
                   {{ book.time_create|date:"M" }}
                   {{ book.time_create.day }},
                   {{ book.time_create.year }}
-              </span>
-              <h2 class="book-title"><a href="#">{{ book.title }}</a></h2>
+                </span>
+
+                <ul class="actions special edit-book-button">
+                    <li><a href="{% url 'edit_book' book.slug %}" class="button small">Edit Book</a></li>
+                </ul>
+
+                <h2 class="book-title"><a href="#">{{ book.title }}</a></h2>
             </header>
             {% if book.image %}
             <div class="image main book"><img src="{{ book.image.url }}" alt="book image" /></div>
