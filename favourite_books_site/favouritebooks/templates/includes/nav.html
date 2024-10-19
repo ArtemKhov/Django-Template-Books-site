@@ -7,7 +7,7 @@
         {% endfor %}
     </ul>
     <ul class="icons">
-        <li><button class="button primary login mobile">Login</button></li>
+        <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
         <li><button class="button register mobile">Register</button></li>
         <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
         <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
@@ -16,7 +16,7 @@
 
 <nav id="nav1">
     <ul class="icons">
-        <li><button class="button primary login mobile-navbar">Login</button></li>
+        <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
         <li><button class="button register mobile-navbar">Register</button></li>
     </ul>
 </nav>

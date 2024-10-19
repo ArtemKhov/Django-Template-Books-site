@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Login</h2>
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Buttons -->
+        <div class="col-12">
+            <ul class="actions form-button">
+                <li><input type="submit" value="Login" class="primary" /></li>
+            </ul>
+        </div>
+
+    </form>
+
+{% endblock %}
