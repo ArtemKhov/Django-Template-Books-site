@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView, DeleteView
 
 from books.forms import AddBookForm, FeedbackForm
 from books.models import Book, Genres
@@ -65,6 +65,17 @@ class BookEdit(DataMixin, UpdateView):
 class BookEditSuccess(DataMixin, TemplateView):
     template_name = 'books/edit_book_success.html'
     page_title = 'Success'
+
+class BookDelete(DataMixin, DeleteView):
+    model = Book
+    slug_url_kwarg = 'book_slug'
+    template_name = 'books/delete_book.html'
+    success_url = reverse_lazy('books')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return self.get_mixin_context(context, title=f'Delete book: {context["book"].title}')
+
 
 class Feedback(DataMixin, FormView):
     form_class = FeedbackForm
