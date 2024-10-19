@@ -40,20 +40,37 @@
       {% endfor %}
     </section>
 
-    <!-- Pagination -->
-    <footer>
 
+{% endblock %}
+
+{% block pagination %}
+
+    <footer>
+      <!-- Pagination -->
       <div class="pagination">
-          <!--<a href="#" class="previous">Prev</a>-->
-          <a href="#" class="page active">1</a>
-          <a href="#" class="page">2</a>
-          <a href="#" class="page">3</a>
-          <span class="extra">&hellip;</span>
-          <a href="#" class="page">8</a>
-          <a href="#" class="page">9</a>
-          <a href="#" class="page">10</a>
-          <a href="#" class="next">Next</a>
+          {% if page_obj.has_other_pages %}
+
+              {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }} " class="previous">Prev</a>
+              {% endif %}
+
+              {% for current_number_page in paginator.page_range %}
+                    {% if page_obj.number == current_number_page %}
+                        <a href="?page={{ current_number_page }}" class="page active">{{ current_number_page }}</a>
+                    {% elif current_number_page >= page_obj.number|add:-2 and current_number_page <= page_obj.number|add:2 %}
+                        <a href="?page={{ current_number_page }}" class="page">{{ current_number_page }}</a>
+                    {% elif page_obj.number > 2 or page_obj.number < 2%}
+                        <span class="extra">&hellip;</span>
+                    {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }} " class="next">Next</a>
+              {% endif %}
+
+          {% endif %}
       </div>
     </footer>
 
 {% endblock %}
+

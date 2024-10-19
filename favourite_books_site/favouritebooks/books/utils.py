@@ -5,6 +5,7 @@ navbar = [{'title': "Home", 'url_name': 'home'},
 
 class DataMixin:
     page_title = None
+    paginate_by = 4
     extra_context = {}
 
     def __init__(self):
