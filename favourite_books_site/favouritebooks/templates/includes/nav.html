@@ -3,12 +3,19 @@
 <nav id="nav">
     <ul class="links">
         {% for navbar_item in navbar %}
-            <li><a href="{% url navbar_item.url_name %}">{{navbar_item.title}}</a></li>
+            <li><a href="{% url navbar_item.url_name %}">{{ navbar_item.title }}</a></li>
         {% endfor %}
     </ul>
     <ul class="icons">
+
+        {% if user.is_authenticated %}
+        <li><a href="#"><button class="button primary login mobile">{{ user.username }}</button></a></li>
+        <li><a href="{% url 'users:logout' %}"><button class="button register mobile">Logout</button></a></li>
+        {% else %}
         <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
         <li><button class="button register mobile">Register</button></li>
+        {% endif %}
+
         <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
         <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
     </ul>
@@ -16,8 +23,15 @@
 
 <nav id="nav1">
     <ul class="icons">
+
+        {% if user.is_authenticated %}
+        <li><a href="#" class="button primary login mobile-navbar">{{ user.username }}</a></li>
+        <li><button class="button register mobile-navbar">Logout</button></li>
+        {% else %}
         <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
         <li><button class="button register mobile-navbar">Register</button></li>
+        {% endif %}
+
     </ul>
 </nav>
 
