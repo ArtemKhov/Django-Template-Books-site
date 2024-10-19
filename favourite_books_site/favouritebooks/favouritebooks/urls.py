@@ -8,6 +8,7 @@ from favouritebooks import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('books.urls')),
+    path('users/', include('users.urls', namespace='users')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
