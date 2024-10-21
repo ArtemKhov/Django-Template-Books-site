@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMessage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
@@ -28,7 +29,7 @@ class AllPublishedBooks(DataMixin, ListView):
         return Book.objects.filter(is_published=1)
 
 
-class AddBook(DataMixin, FormView):
+class AddBook(LoginRequiredMixin, DataMixin, FormView):
     form_class = AddBookForm
     template_name = 'books/add_book.html'
     page_title = 'Add new book'
