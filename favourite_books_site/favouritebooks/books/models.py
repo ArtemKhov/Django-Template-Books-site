@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django_unique_slugify import unique_slugify
@@ -29,6 +30,11 @@ class Book(models.Model):
                               blank=True,
                               null=True,
                               verbose_name='Book Image')
+    author = models.ForeignKey(get_user_model(),
+                               on_delete=models.SET_NULL,
+                               related_name='books',
+                               null=True,
+                               default=None)
 
     objects = models.Manager()
     published = PublishedManager()

@@ -20,6 +20,7 @@
                   {{ book.time_create|date:"M" }}
                   {{ book.time_create.day }},
                   {{ book.time_create.year }}
+                  | user: {{ book.author.username|default:"Unknown" }}
               </span>
               <h2 class="book-title"><a href="{{ book.get_absolute_url }}">{{ book.title|truncatechars:35 }}</a></h2>
           </header>

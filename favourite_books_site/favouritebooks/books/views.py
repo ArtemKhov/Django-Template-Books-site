@@ -36,7 +36,8 @@ class AddBook(LoginRequiredMixin, DataMixin, FormView):
     success_url = reverse_lazy('books')
 
     def form_valid(self, form):
-        form.save()
+        new_book = form.save(commit=False)
+        new_book.author = self.request.user
         return super().form_valid(form)
 
 class DetailedBookInfo(DataMixin, DetailView):
