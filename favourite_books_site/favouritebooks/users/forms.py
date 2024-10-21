@@ -4,23 +4,23 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Login', widget=forms.TextInput())
-    password = forms.CharField(label='Password', widget=forms.PasswordInput())
+    username = forms.CharField(label='Login*', widget=forms.TextInput())
+    password = forms.CharField(label='Password*', widget=forms.PasswordInput())
 
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label="Login", widget=forms.TextInput())
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
-    password2 = forms.CharField(label="Repeat password", widget=forms.PasswordInput())
+    username = forms.CharField(label="Username*", widget=forms.TextInput())
+    password1 = forms.CharField(label="Password*", widget=forms.PasswordInput())
+    password2 = forms.CharField(label="Repeat password*", widget=forms.PasswordInput())
 
     class Meta:
         model = get_user_model()
         fields = ['username', 'email', 'password1', 'password2']
         labels = {
-            'email': 'E-mail',
+            'email': 'E-mail*',
         }
 
         widgets = {
