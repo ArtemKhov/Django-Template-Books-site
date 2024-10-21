@@ -13,7 +13,3 @@ class LoginUser(LoginView):
     extra_context = {
         'title': 'Login',
     }
-
-def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('users:login'))

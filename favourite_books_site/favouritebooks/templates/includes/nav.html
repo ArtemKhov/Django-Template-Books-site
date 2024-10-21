@@ -9,11 +9,14 @@
     <ul class="icons">
 
         {% if user.is_authenticated %}
-        <li><a href="#"><button class="button primary login mobile">{{ user.username }}</button></a></li>
-        <li><a href="{% url 'users:logout' %}"><button class="button register mobile">Logout</button></a></li>
+            <li><a href="#"><button class="button primary login mobile">{{ user.username }}</button></a></li>
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
+            </form>
         {% else %}
-        <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
-        <li><button class="button register mobile">Register</button></li>
+            <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
+            <li><button class="button register mobile">Register</button></li>
         {% endif %}
 
         <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
@@ -25,11 +28,14 @@
     <ul class="icons">
 
         {% if user.is_authenticated %}
-        <li><a href="#" class="button primary login mobile-navbar">{{ user.username }}</a></li>
-        <li><a href="{% url 'users:logout' %}"><button class="button register mobile">Logout</button></a></li>
+            <li><a href="#" class="button primary login mobile-navbar">{{ user.username }}</a></li>
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
+            </form>
         {% else %}
-        <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
-        <li><button class="button register mobile-navbar">Register</button></li>
+            <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
+            <li><button class="button register mobile-navbar">Register</button></li>
         {% endif %}
 
     </ul>
