@@ -12,7 +12,8 @@
                 <span class="date book-info">
                   {{ book.time_create|date:"M" }}
                   {{ book.time_create.day }},
-                  {{ book.time_create.year }}
+                  {{ book.time_create.year }}<br>
+                  user: {{ book.author.username|default:"Unknown" }}
                 </span>
 
                 {% if book.author.username == user.username %}
