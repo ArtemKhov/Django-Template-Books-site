@@ -4,25 +4,27 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Login')
-    password = forms.CharField(label='Password')
+    username = forms.CharField(label='Login', widget=forms.TextInput())
+    password = forms.CharField(label='Password', widget=forms.PasswordInput())
 
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label="Login")
-    password1 = forms.CharField(label="Password")
-    password2 = forms.CharField(label="Repeat password")
+    username = forms.CharField(label="Login", widget=forms.TextInput())
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
+    password2 = forms.CharField(label="Repeat password", widget=forms.PasswordInput())
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         labels = {
             'email': 'E-mail',
-            'first_name': "Name",
-            'last_name': "Surname",
+        }
+
+        widgets = {
+            'email': forms.TextInput(),
         }
 
     def clean_email(self):
