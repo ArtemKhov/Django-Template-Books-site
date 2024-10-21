@@ -6,14 +6,17 @@
             <li><a href="{% url navbar_item.url_name %}">{{ navbar_item.title }}</a></li>
         {% endfor %}
     </ul>
+
     <ul class="icons">
 
         {% if user.is_authenticated %}
-            <li><a href="#"><button class="button primary login mobile">{{ user.username }}</button></a></li>
-            <form method="post" action="{% url 'users:logout' %}">
-                {% csrf_token %}
-                <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
-            </form>
+            <li><button class="button primary profile mobile">{{ user.username }}</button></li>
+            <li>
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button logout mobile">Logout</button>
+                </form>
+            </li>
         {% else %}
             <li><a class="login-block" href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
             <li><a class="register-block" href="{% url 'users:register' %}"><button class="button register mobile">Register</button></a></li>
@@ -25,19 +28,20 @@
 </nav>
 
 <nav id="nav1">
-    <ul class="icons">
 
+    <ul class="icons">
         {% if user.is_authenticated %}
-            <li><a href="#" class="button primary login mobile-navbar">{{ user.username }}</a></li>
-            <form method="post" action="{% url 'users:logout' %}">
-                {% csrf_token %}
-                <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
-            </form>
+            <li><button class="button primary profile mobile-navbar">{{ user.username }}</button></li>
+            <li>
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button logout mobile-navbar">Logout</button>
+                </form>
+            </li>
         {% else %}
             <li><a class="login-block-mobile" href="{% url 'users:login' %}" ><button class="button primary login mobile-navbar">Login</button></a></li>
             <li><a class="register-block-mobile" href="{% url 'users:register' %}"><button class="button register mobile-navbar">Register</button></a></li>
         {% endif %}
-
     </ul>
 </nav>
 
