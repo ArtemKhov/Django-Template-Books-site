@@ -15,7 +15,7 @@
                 <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
             </form>
         {% else %}
-            <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
+            <li><a class="login-block" href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
             <li><a class="register-block" href="{% url 'users:register' %}"><button class="button register mobile">Register</button></a></li>
         {% endif %}
 
@@ -34,7 +34,7 @@
                 <li><a href="{% url 'users:logout' %}"><button type="submit" class="button register mobile">Logout</button></a></li>
             </form>
         {% else %}
-            <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
+            <li><a class="login-block-mobile" href="{% url 'users:login' %}" ><button class="button primary login mobile-navbar">Login</button></a></li>
             <li><a class="register-block-mobile" href="{% url 'users:register' %}"><button class="button register mobile-navbar">Register</button></a></li>
         {% endif %}
 

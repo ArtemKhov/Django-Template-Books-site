@@ -2923,6 +2923,15 @@ input, select, textarea {
         justify-content: end;
     }
 
+/* Login */
+    .login-block {
+        border-bottom: none;
+    }
+
+    .login-block-mobile {
+        border-bottom: none;
+    }
+
 /* Register */
     .register-block {
         border-bottom: none;
