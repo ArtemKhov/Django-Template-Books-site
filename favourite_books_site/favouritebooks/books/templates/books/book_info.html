@@ -15,10 +15,12 @@
                   {{ book.time_create.year }}
                 </span>
 
+                {% if book.author.username == user.username %}
                 <ul class="actions special edit-book-button">
                     <li><a href="{% url 'edit_book' book.slug %}" class="button small">Edit Book</a></li>
                     <li><a href="{% url 'delete_book' book.slug %}" class="button small delete">Delete Book</a></li>
                 </ul>
+                {% endif %}
 
                 <h2 class="book-title"><a href="#">{{ book.title }}</a></h2>
             </header>
