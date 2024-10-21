@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <p class="feedback-success">You have successfully registered on the site! To enter the system you need to authorize:</p>
+
+    <ul class="actions special login-now">
+          <li><a href="{% url 'users:login' %}" class="button large">Login now</a></li>
+    </ul>
+
+{% endblock %}

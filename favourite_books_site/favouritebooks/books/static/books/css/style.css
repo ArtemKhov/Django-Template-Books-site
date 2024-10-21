@@ -2275,6 +2275,10 @@ input, select, textarea {
 			background-color: #00AF64;
 			box-shadow: none;
 			color: #ffffff !important;
+			max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 		}
 
 			input[type="submit"].primary:hover,
@@ -2929,6 +2933,13 @@ input, select, textarea {
 
 /* Back home button */
     #main > .backhome-button {
+        border-top: 0px;
+        padding: 2rem 4rem 3rem 4rem;
+    }
+
+
+/* Login now button */
+    #main > .login-now {
         border-top: 0px;
         padding: 2rem 4rem 3rem 4rem;
     }
@@ -4082,6 +4093,10 @@ input, select, textarea {
 
 			.button.primary.profile.mobile-navbar{
 			    margin: 0px 0px 0px 20px;
+			    max-width: 150px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 			}
 
 			.button.register.mobile-navbar{
@@ -4091,6 +4106,18 @@ input, select, textarea {
 			.button.logout.mobile-navbar{
 			    margin: 0px 0px 0px 0px;
 			}
+
+		}
+
+		@media screen and (max-width: 380px) {
+
+            .button.primary.profile.mobile-navbar{
+                    margin: 0px 0px 0px 20px;
+                    max-width: 100px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
 
 		}
 
