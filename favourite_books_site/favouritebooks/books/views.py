@@ -38,6 +38,7 @@ class AddBook(LoginRequiredMixin, DataMixin, FormView):
     def form_valid(self, form):
         new_book = form.save(commit=False)
         new_book.author = self.request.user
+        form.save()
         return super().form_valid(form)
 
 class DetailedBookInfo(DataMixin, DetailView):
