@@ -26,7 +26,7 @@
 
         {% if user.is_authenticated %}
         <li><a href="#" class="button primary login mobile-navbar">{{ user.username }}</a></li>
-        <li><button class="button register mobile-navbar">Logout</button></li>
+        <li><a href="{% url 'users:logout' %}"><button class="button register mobile">Logout</button></a></li>
         {% else %}
         <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
         <li><button class="button register mobile-navbar">Register</button></li>
