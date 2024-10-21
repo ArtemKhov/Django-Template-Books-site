@@ -16,7 +16,7 @@
             </form>
         {% else %}
             <li><a href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
-            <li><button class="button register mobile">Register</button></li>
+            <li><a class="register-block" href="{% url 'users:register' %}"><button class="button register mobile">Register</button></a></li>
         {% endif %}
 
         <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
@@ -35,7 +35,7 @@
             </form>
         {% else %}
             <li><a href="{% url 'users:login' %}" class="button primary login mobile-navbar">Login</a></li>
-            <li><button class="button register mobile-navbar">Register</button></li>
+            <li><a class="register-block-mobile" href="{% url 'users:register' %}"><button class="button register mobile-navbar">Register</button></a></li>
         {% endif %}
 
     </ul>
