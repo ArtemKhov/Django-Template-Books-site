@@ -8,36 +8,23 @@
 
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
+
         <div class="form-error">{{ form.non_field_errors}}</div>
 
-
-        <!-- Skip 'Book name' and 'Description' field and starting loop from 'Published' field -->
         {% for form_item in form %}
-            {% if forloop.counter != 5 %}
                 <p>
                     <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
                     {{ form_item }}
                 </p>
                 <div class="form-error">{{ form_item.errors }}</div>
-
-            <!-- Show Image Button -->
-            {% elif forloop.counter == 5 %}
-                <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
-                <label class="button icon solid fa-download custom-file-upload">
-                    <span>Upload Image</span>
-                    {{ form_item }}
-                </label>
-                <div class="form-error">{{ form_item.errors }}</div>
-            {% endif %}
         {% endfor %}
 
-        <!-- Buttons -->
+        <!-- Button -->
         <div class="col-12">
             <ul class="actions form-button">
                 <li><input type="submit" value="Save changes" class="primary" /></li>
             </ul>
         </div>
-
     </form>
 
 {% endblock %}

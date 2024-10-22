@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 
 from books.utils import DataMixin
+from favouritebooks import settings
 from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm
 
 
