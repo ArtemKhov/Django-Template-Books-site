@@ -10,7 +10,7 @@
     <ul class="icons">
 
         {% if user.is_authenticated %}
-            <li><button class="button primary profile mobile">{{ user.username }}</button></li>
+            <li><button class="button primary profile mobile"><a class="user-block" href="{% url 'users:profile' %}">{{ user.username }}</a></button></li>
             <li>
                 <form method="post" action="{% url 'users:logout' %}">
                     {% csrf_token %}
@@ -31,7 +31,7 @@
 
     <ul class="icons">
         {% if user.is_authenticated %}
-            <li><button class="button primary profile mobile-navbar">{{ user.username }}</button></li>
+            <li><button class="button primary profile mobile-navbar"><a class="user-block-mobile" href="{% url 'users:profile' %}">{{ user.username }}</a></button></li>
             <li>
                 <form method="post" action="{% url 'users:logout' %}">
                     {% csrf_token %}

@@ -2972,6 +2972,15 @@ input, select, textarea {
         border-bottom: none;
     }
 
+/* User Profile */
+    .user-block {
+        border-bottom: none;
+    }
+
+    .user-block-mobile {
+        border-bottom: none;
+    }
+
 /* Icons */
 
 	ul.icons {
