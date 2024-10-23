@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class LoginUserForm(AuthenticationForm):
@@ -51,10 +53,17 @@ class ProfileUserForm(forms.ModelForm):
             'last_name': forms.TextInput(),
         }
 
-
 class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label='Old password', widget=forms.PasswordInput())
     new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput())
     new_password2 = forms.CharField(label='New password confirmation', widget=forms.PasswordInput())
+
+class CustomPasswordResetForm(PasswordResetForm):
+     def clean_email(self):
+         email = self.cleaned_data.get('email')
+         user = User.objects.filter(email=email).first()
+         if not user:
+            raise ValidationError('The user with this E-mail does not exist. Make sure the E-mail is correct.')
+         return email
 
 
