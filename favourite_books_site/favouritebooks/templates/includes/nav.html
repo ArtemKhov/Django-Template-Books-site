@@ -10,7 +10,11 @@
     <ul class="icons">
 
         {% if user.is_authenticated %}
-            <li><a class="user-block" href="{% url 'users:profile' %}"><button class="button primary profile mobile">{{ user.username }}</button></a></li>
+            <li>
+                <a class="user-block" href="{% url 'users:profile' %}">
+                    <button class="button primary profile mobile">{{ user.username }}</button>
+                </a>
+            </li>
             <li>
                 <form method="post" action="{% url 'users:logout' %}">
                     {% csrf_token %}
@@ -18,8 +22,16 @@
                 </form>
             </li>
         {% else %}
-            <li><a class="login-block" href="{% url 'users:login' %}"><button class="button primary login mobile">Login</button></a></li>
-            <li><a class="register-block" href="{% url 'users:register' %}"><button class="button register mobile">Register</button></a></li>
+            <li>
+                <a class="login-block" href="{% url 'users:login' %}">
+                    <button class="button primary login mobile">Login</button>
+                </a>
+            </li>
+            <li>
+                <a class="register-block" href="{% url 'users:register' %}">
+                    <button class="button register mobile">Register</button>
+                </a>
+            </li>
         {% endif %}
 
         <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
@@ -31,7 +43,11 @@
 
     <ul class="icons">
         {% if user.is_authenticated %}
-            <li><a class="user-block-mobile" href="{% url 'users:profile' %}"><button class="button primary profile mobile-navbar">{{ user.username }}</button></a></li>
+            <li>
+                <a class="user-block-mobile" href="{% url 'users:profile' %}">
+                    <button class="button primary profile mobile-navbar">{{ user.username }}</button>
+                </a>
+            </li>
             <li>
                 <form method="post" action="{% url 'users:logout' %}">
                     {% csrf_token %}
@@ -39,8 +55,16 @@
                 </form>
             </li>
         {% else %}
-            <li><a class="login-block-mobile" href="{% url 'users:login' %}" ><button class="button primary login mobile-navbar">Login</button></a></li>
-            <li><a class="register-block-mobile" href="{% url 'users:register' %}"><button class="button register mobile-navbar">Register</button></a></li>
+            <li>
+                <a class="login-block-mobile" href="{% url 'users:login' %}">
+                    <button class="button primary login mobile-navbar">Login</button>
+                </a>
+            </li>
+            <li>
+                <a class="register-block-mobile" href="{% url 'users:register' %}">
+                    <button class="button register mobile-navbar">Register</button>
+                </a>
+            </li>
         {% endif %}
     </ul>
 </nav>
