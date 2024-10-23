@@ -80,7 +80,7 @@ class BookDelete(DataMixin, DeleteView):
         return self.get_mixin_context(context, title=f'Delete book: {context["book"].title}')
 
 
-class Feedback(DataMixin, FormView):
+class Feedback(LoginRequiredMixin, DataMixin, FormView):
     form_class = FeedbackForm
     template_name = 'books/feedback.html'
     page_title = 'Feedback'
