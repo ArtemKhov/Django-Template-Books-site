@@ -1,7 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import EmailMessage
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView, DeleteView
 
@@ -65,6 +66,12 @@ class BookEdit(DataMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=f'Edit book: {context["book"].title}')
 
+    def dispatch(self, request, *args, **kwargs):
+        book = self.get_object()
+        if book.author != self.request.user:
+            raise Http404("You are not allowed to edit this Book")
+        return super(BookEdit, self).dispatch(request, *args, **kwargs)
+
 class BookEditSuccess(DataMixin, TemplateView):
     template_name = 'books/edit_book_success.html'
     page_title = 'Success'
@@ -78,6 +85,12 @@ class BookDelete(DataMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=f'Delete book: {context["book"].title}')
+
+    def dispatch(self, request, *args, **kwargs):
+        book = self.get_object()
+        if book.author != self.request.user:
+            raise Http404("You are not allowed to delete this Book")
+        return super(BookDelete, self).dispatch(request, *args, **kwargs)
 
 
 class Feedback(LoginRequiredMixin, DataMixin, FormView):
@@ -121,6 +134,9 @@ class BookGenres(DataMixin, ListView):
 
     def get_queryset(self):
         return Book.published.filter(genres__slug=self.kwargs['tag_slug']).prefetch_related('genres')
+
+def page_not_found(request, exception):
+    return HttpResponseNotFound('<h1>Page not found</h1>')
 
 
 
