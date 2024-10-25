@@ -1,4 +1,5 @@
 navbar = [{'title': "Home", 'url_name': 'home'},
+        {'title': "All books", 'url_name': 'books'},
         {'title': "Add Book", 'url_name': 'add_book'},
         {'title': "Feedback", 'url_name': 'feedback'},
 ]
