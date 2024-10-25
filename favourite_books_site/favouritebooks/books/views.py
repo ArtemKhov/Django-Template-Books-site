@@ -16,19 +16,22 @@ class BookMainPage(DataMixin, TemplateView):
     template_name = 'books/index.html'
     page_title = 'Favourite Books'
 
-    books = Book.objects.filter(is_published=1)
-    extra_context = {
-        'books': books,
-    }
-
 class AllPublishedBooks(DataMixin, ListView):
     template_name = 'books/books.html'
     context_object_name = 'books'
-    page_title = 'My Books'
+    page_title = 'All Books'
 
     def get_queryset(self):
         return Book.objects.filter(is_published=1)
 
+class UserBooks(LoginRequiredMixin, DataMixin, ListView):
+    template_name = 'books/user_books.html'
+    context_object_name = 'books'
+    page_title = 'My Books'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Book.objects.filter(author=user)
 
 class AddBook(LoginRequiredMixin, DataMixin, FormView):
     form_class = AddBookForm
@@ -51,9 +54,15 @@ class DetailedBookInfo(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=context['book'].title)
 
-    # show only published Book and return book's slug according to url (book/<slug:book_slug>/)
+    # Return book's slug according to url (book/<slug:book_slug>/)
     def get_object(self, queryset=None):
-        return get_object_or_404(Book.published, slug=self.kwargs[self.slug_url_kwarg])
+        return get_object_or_404(Book, slug=self.kwargs[self.slug_url_kwarg])
+
+    def dispatch(self, request, *args, **kwargs):
+        book = self.get_object()
+        if book.is_published != 1 and book.author != self.request.user:
+            raise Http404("Access denied")
+        return super(DetailedBookInfo, self).dispatch(request, *args, **kwargs)
 
 class BookEdit(DataMixin, UpdateView):
     model = Book

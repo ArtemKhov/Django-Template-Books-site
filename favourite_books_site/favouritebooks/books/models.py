@@ -14,8 +14,8 @@ class Book(models.Model):
     Book info
     '''
     class Status(models.IntegerChoices):
-        PUBLISHED = 1, 'Published'
-        DRAFT = 0, 'Draft'
+        PUBLISHED = 1, 'Published (available for all to view)'
+        DRAFT = 0, 'Not published (available only you)'
 
     title = models.CharField(max_length=255,
                              verbose_name='Book name')

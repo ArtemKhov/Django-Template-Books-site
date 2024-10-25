@@ -3,7 +3,11 @@
 <nav id="nav">
     <ul class="links">
         {% for navbar_item in navbar %}
-            <li><a href="{% url navbar_item.url_name %}">{{ navbar_item.title }}</a></li>
+            {% if request.user.is_authenticated and navbar_item.title == 'My books' %}
+                <li><a href="{% url navbar_item.url_name %}">{{ navbar_item.title }}</a></li>
+            {% elif navbar_item.title != 'My books' %}
+                <li><a href="{% url navbar_item.url_name %}">{{ navbar_item.title }}</a></li>
+            {% endif %}
         {% endfor %}
     </ul>
 
