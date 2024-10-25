@@ -128,6 +128,7 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'users.authentication.EmailAuthBackend',
 ]
@@ -136,6 +137,10 @@ AUTHENTICATION_BACKENDS = [
 # Github Authentication
 SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
+
+# Google Authentication
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 
 # Social pipelines

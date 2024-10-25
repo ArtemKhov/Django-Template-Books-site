@@ -24,11 +24,22 @@
             <ul class="actions form-button">
                 <li><input type="submit" value="Login" class="primary" /></li>
             </ul>
-            <p>
-                <a class="social-auth" href="{% url 'social:begin' 'github' %}">
-                    <img class="social-image" src="{% static 'books/images/social-auth/github.png' %}" alt="github-auth">
-                </a>
-            </p>
+
+            <div class="social-auth-container">
+                <p>
+                    <a class="social-auth" href="{% url 'social:begin' 'github' %}">
+                        <img class="social-image github"
+                             src="{% static 'books/images/social-auth/github.png' %}" alt="github-auth">
+                    </a>
+                </p>
+                <p>
+                    <a class="social-auth" href="{% url 'social:begin' 'google-oauth2' %}">
+                        <img class="social-image google"
+                             src="{% static 'books/images/social-auth/google.png' %}" alt="google-auth">
+                    </a>
+                </p>
+            </div>
+
             <p><a href="{% url 'users:password_reset' %}">Forgot your password?</a></p>
         </div>
 

@@ -2964,13 +2964,27 @@ input, select, textarea {
     }
 
 /* Social auth */
+    .social-auth-container {
+        display: flex;
+    }
+
+    .social-auth-container p {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
     .social-auth {
         border-bottom: none;
     }
 
-    .social-image {
+    .github {
         width: 58px;
         height: 58px;
+    }
+
+    .google {
+        width: 59px;
+        height: 59px;
     }
 
 /* Register */
