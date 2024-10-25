@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -23,6 +24,11 @@
             <ul class="actions form-button">
                 <li><input type="submit" value="Login" class="primary" /></li>
             </ul>
+            <p>
+                <a class="social-auth" href="{% url 'social:begin' 'github' %}">
+                    <img class="social-image" src="{% static 'books/images/social-auth/github.png' %}" alt="github-auth">
+                </a>
+            </p>
             <p><a href="{% url 'users:password_reset' %}">Forgot your password?</a></p>
         </div>
 

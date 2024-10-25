@@ -11,14 +11,16 @@
         <div class="form-error">{{ form.non_field_errors}}</div>
 
         {% for form_item in form %}
-                <p>
-                    <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
-                    {{ form_item }}
-                </p>
-                <div class="form-error">{{ form_item.errors }}</div>
+            <p>
+                <label class="form-label" for="{{ form_item.id_for_label }}">{{ form_item.label }}</label>
+                {{ form_item }}
+            </p>
+            <div class="form-error">{{ form_item.errors }}</div>
         {% endfor %}
 
-        <p><a href="{% url 'users:password_change' %}">Change password</a></p>
+        {% if user.has_usable_password %}
+            <p><a href="{% url 'users:password_change' %}">Change password</a></p>
+        {% endif %}
 
         <!-- Button -->
         <div class="col-12">

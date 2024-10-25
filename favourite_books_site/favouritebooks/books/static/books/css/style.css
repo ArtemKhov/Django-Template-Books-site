@@ -2963,6 +2963,16 @@ input, select, textarea {
         border-bottom: none;
     }
 
+/* Social auth */
+    .social-auth {
+        border-bottom: none;
+    }
+
+    .social-image {
+        width: 58px;
+        height: 58px;
+    }
+
 /* Register */
     .register-block {
         border-bottom: none;

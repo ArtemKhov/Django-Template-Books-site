@@ -38,6 +38,7 @@ class RegisterUserForm(UserCreationForm):
 class ProfileUserForm(forms.ModelForm):
     username = forms.CharField(label='Username', widget=forms.TextInput())
     email = forms.CharField(disabled=True,
+                            required=False,
                             label='E-mail',
                             widget=forms.TextInput(attrs={'style': 'color: #888888;'}))
 
