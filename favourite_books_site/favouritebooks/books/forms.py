@@ -1,3 +1,4 @@
+from captcha.fields import CaptchaField
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -37,3 +38,4 @@ class FeedbackForm(forms.Form):
                              widget=forms.TextInput(attrs={'placeholder': 'Your Email'}))
     content = forms.CharField(label='Message',
                               widget=forms.Textarea(attrs={'placeholder': 'Provide feedback in this field'}))
+    captcha = CaptchaField()
