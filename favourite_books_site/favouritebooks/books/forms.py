@@ -5,6 +5,7 @@ from .models import Book, Genres
 
 class AddBookForm(forms.ModelForm):
     genres = forms.ModelMultipleChoiceField(queryset=Genres.objects.all().order_by('genre'),
+                                    required=False,
                                     label='Genres',
                                     widget=forms.SelectMultiple(attrs={'class': 'genres-option'}))
 
