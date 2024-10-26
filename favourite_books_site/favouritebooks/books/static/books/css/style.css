@@ -2937,7 +2937,6 @@ input, select, textarea {
         padding: 2rem 4rem 3rem 4rem;
     }
 
-
 /* Login now button */
     #main > .login-now {
         border-top: 0px;
@@ -2953,6 +2952,18 @@ input, select, textarea {
     ul.actions.special.edit-book-button{
         justify-content: end;
     }
+
+/* My books page */
+    #main > .my-books-empty {
+        border-top: 0px;
+        text-align: center;
+        padding: 2rem 4rem 2rem 4rem;
+    }
+
+    #main > .my-books-empty.text {
+        padding: 2rem 4rem 0rem 4rem;
+    }
+
 
 /* Login */
     .login-block {

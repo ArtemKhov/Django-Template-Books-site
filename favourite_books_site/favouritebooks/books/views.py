@@ -37,7 +37,7 @@ class AddBook(LoginRequiredMixin, DataMixin, FormView):
     form_class = AddBookForm
     template_name = 'books/add_book.html'
     page_title = 'Add new book'
-    success_url = reverse_lazy('books')
+    success_url = reverse_lazy('user_books')
 
     def form_valid(self, form):
         new_book = form.save(commit=False)
