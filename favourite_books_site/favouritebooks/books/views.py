@@ -144,6 +144,24 @@ class BookGenres(DataMixin, ListView):
     def get_queryset(self):
         return Book.published.filter(genres__slug=self.kwargs['tag_slug']).prefetch_related('genres')
 
+class UserBooksByTag(LoginRequiredMixin, DataMixin, ListView):
+    template_name = 'books/user_books.html'
+    context_object_name = 'books'
+
+    def get_queryset(self):
+        user = self.request.user
+        genre_slug = self.kwargs.get('tag_slug')
+        # Filter books by user and selected genre
+        return Book.objects.filter(author=user, genres__slug=genre_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Genres.objects.filter(
+            id__in=Book.objects.filter(author=self.request.user).values_list('genres', flat=True)).distinct()
+        tag = Genres.objects.get(slug=self.kwargs['tag_slug'])
+        return self.get_mixin_context(context, title='My books - Genre: ' + tag.genre)
+
+
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Page not found</h1>')
 

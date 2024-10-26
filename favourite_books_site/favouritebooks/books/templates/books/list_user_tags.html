@@ -1,0 +1,7 @@
+{% if tags %}
+    <ul class="icons alt">
+        {% for tag in tags|dictsort:"genre" %}
+            <li><a class="genres" href="{% url 'user_books_by_tag' tag_slug=tag.slug %}">{{ tag.genre }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
