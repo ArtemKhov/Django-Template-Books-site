@@ -9,37 +9,44 @@
     <!-- Show all genres (tags) -->
     {% show_all_tags %}
 
-    <!-- Books -->
-    <section class="posts">
+    {% if books %}
+        <!-- Books -->
+        <section class="posts">
 
-      {% for book in books %}
+          {% for book in books %}
 
-      <article>
-          <header>
-              <span class="date">
-                  {{ book.time_create|date:"M" }}
-                  {{ book.time_create.day }},
-                  {{ book.time_create.year }}
-                  | user: {{ book.author.username|default:"Unknown" }}
-              </span>
-              <h2 class="book-title"><a href="{{ book.get_absolute_url }}">{{ book.title|truncatechars:35 }}</a></h2>
-          </header>
-          {% if book.image %}
-          <a href="{{ book.get_absolute_url }}" class="image fit">
-              <img src="{{ book.image.url }}" alt="book image" />
-          </a>
-          {% else %}
-          <a href="{{ book.get_absolute_url }}" class="image fit">
-              <img src="{% static 'books/images/default_book_image.jpg' %}" alt="book image" />
-          </a>
-          {% endif %}
-          <p>{{ book.description|linebreaks|truncatewords:25 }}</p>
-          <ul class="actions special">
-              <li><a href="{{ book.get_absolute_url }}" class="button">Read more</a></li>
-          </ul>
-      </article>
-      {% endfor %}
-    </section>
+          <article>
+              <header>
+                  <span class="date">
+                      {{ book.time_create|date:"M" }}
+                      {{ book.time_create.day }},
+                      {{ book.time_create.year }}
+                      | user: {{ book.author.username|default:"Unknown" }}
+                  </span>
+                  <h2 class="book-title"><a href="{{ book.get_absolute_url }}">{{ book.title|truncatechars:35 }}</a></h2>
+              </header>
+              {% if book.image %}
+              <a href="{{ book.get_absolute_url }}" class="image fit">
+                  <img src="{{ book.image.url }}" alt="book image" />
+              </a>
+              {% else %}
+              <a href="{{ book.get_absolute_url }}" class="image fit">
+                  <img src="{% static 'books/images/default_book_image.jpg' %}" alt="book image" />
+              </a>
+              {% endif %}
+              <p>{{ book.description|linebreaks|truncatewords:25 }}</p>
+              <ul class="actions special">
+                  <li><a href="{{ book.get_absolute_url }}" class="button">Read more</a></li>
+              </ul>
+          </article>
+          {% endfor %}
+        </section>
+    {% else %}
+        <p class="my-books-empty text">Haven't added any books yet</p>
+        <ul class="actions special my-books-empty">
+            <li><a href="{% url 'add_book' %}" class="button large">Add book</a></li>
+        </ul>
+    {% endif %}
 
 
 {% endblock %}
