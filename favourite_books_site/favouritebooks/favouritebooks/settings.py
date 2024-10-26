@@ -66,8 +66,12 @@ WSGI_APPLICATION = 'favouritebooks.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'favouritebooks_db',
+        'USER': os.getenv('USER_PG'),
+        'PASSWORD': os.getenv('PASSWORD_PG'),
+        'HOST': os.getenv('HOST_PG'),
+        'PORT': os.getenv('PORT_PG'),
     }
 }
 
