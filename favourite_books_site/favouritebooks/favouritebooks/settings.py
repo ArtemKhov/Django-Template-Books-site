@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 from  dotenv import load_dotenv
@@ -22,7 +23,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'captcha',
     'django_extensions',
     'social_django',
@@ -38,8 +38,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+ENABLE_DEBUG_TOOLBAR = DEBUG and "test" not in sys.argv
+if ENABLE_DEBUG_TOOLBAR:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+
+    # Customize the config to support turbo and htmx boosting.
+    DEBUG_TOOLBAR_CONFIG = {"ROOT_TAG_EXTRA_ATTRS": "data-turbo-permanent hx-preserve"}
 
 ROOT_URLCONF = 'favouritebooks.urls'
 
