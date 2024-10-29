@@ -144,7 +144,7 @@ class BookGenres(DataMixin, ListView):
     def get_queryset(self):
         return Book.published.filter(genres__slug=self.kwargs['tag_slug']).prefetch_related('genres')
 
-class UserBooksByTag(LoginRequiredMixin, DataMixin, ListView):
+class UserBooksByGenres(LoginRequiredMixin, DataMixin, ListView):
     template_name = 'books/user_books.html'
     context_object_name = 'books'
 
