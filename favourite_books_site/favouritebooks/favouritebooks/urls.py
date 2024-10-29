@@ -22,3 +22,6 @@ if settings.ENABLE_DEBUG_TOOLBAR:
 
 handler404 = page_not_found
 
+admin.site.site_header = "Favourite Books administration panel"
+admin.site.index_title = "Favourite Books administration"
+

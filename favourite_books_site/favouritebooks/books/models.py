@@ -24,7 +24,11 @@ class Book(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    genres = models.ManyToManyField('Genres', blank=True, related_name='genres', db_index=True)
+    genres = models.ManyToManyField('Genres',
+                                    blank=True,
+                                    related_name='genres',
+                                    db_index=True,
+                                    verbose_name='Genres')
     image = models.ImageField(upload_to='book_images/%Y/%m/%d/',
                               default=None,
                               blank=True,
@@ -43,6 +47,8 @@ class Book(models.Model):
         return self.title
 
     class Meta:
+        verbose_name = 'Books'
+        verbose_name_plural = 'Books'
         ordering = ['-time_create']
         indexes = [
             models.Index(fields=['-time_create'])
@@ -62,6 +68,10 @@ class Genres(models.Model):
 
     def __str__(self):
         return self.genre
+
+    class Meta:
+        verbose_name = 'Genres'
+        verbose_name_plural = 'Genres'
 
     def get_absolute_url(self):
         return reverse('tag', kwargs={'tag_slug': self.slug})
