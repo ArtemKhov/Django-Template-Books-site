@@ -2998,6 +2998,22 @@ input, select, textarea {
         text-align: center;
     }
 
+    .button.small.delete.delete-btn {
+        border: none;
+        background: none;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .delete-comment-form {
+        margin: 0 10px 2px 0;
+        text-align: right;
+    }
+
+    .delete-btn img {
+        vertical-align: middle;
+    }
+
 /* Login */
     .login-block {
         border-bottom: none;

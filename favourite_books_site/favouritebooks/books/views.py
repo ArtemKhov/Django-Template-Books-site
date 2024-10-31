@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core import serializers
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -11,7 +11,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView, DeleteView, CreateView
 
 from books.forms import AddBookForm, FeedbackForm, CommentCreateForm
-from books.models import Book, Genres
+from books.models import Book, Genres, Comment
 from books.utils import DataMixin
 from favouritebooks import settings
 
@@ -101,6 +101,19 @@ class DetailedBookInfo(DataMixin, DetailView):
             raise Http404("Access denied")
         return super(DetailedBookInfo, self).dispatch(request, *args, **kwargs)
 
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, View):
+    def post(self, request, *args, **kwargs):
+        comment = get_object_or_404(Comment, id=kwargs['comment_id'])
+        if comment.author == request.user or request.user.is_staff:
+            comment.delete()
+
+        current_page_number = request.GET.get('page', 1)
+        redirect_url = f"{reverse_lazy('book', kwargs={'book_slug': comment.book.slug})}?page={current_page_number}"
+        return redirect(redirect_url)
+
+    def test_func(self):
+        comment = get_object_or_404(Comment, id=self.kwargs['comment_id'])
+        return self.request.user == comment.author or self.request.user.is_staff
 
 class BookEdit(DataMixin, UpdateView):
     model = Book
