@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
-from .models import Book, Genres
+from .models import Book, Genres, Comment
+
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -29,8 +30,14 @@ class BookAdmin(admin.ModelAdmin):
         self.message_user(request, f'{count} books withdrawn from publication.', messages.WARNING)
 
 
-
-
 @admin.register(Genres)
 class GenresAdmin(admin.ModelAdmin):
     readonly_fields = ['slug']
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass
+
+
+

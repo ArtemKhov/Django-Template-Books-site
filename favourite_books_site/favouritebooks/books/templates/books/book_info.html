@@ -6,9 +6,9 @@
 
 {% block content %}
 
-        <!-- Book Detailed Info -->
-        <section class="post">
-            <header class="major">
+<!-- Book Detailed Info -->
+<section class="post">
+    <header class="major">
                 <span class="date book-info">
                   {{ book.time_create|date:"M" }}
                   {{ book.time_create.day }},
@@ -16,36 +16,117 @@
                   user: {{ book.author.username|default:"Unknown" }}
                 </span>
 
-                {% if book.author.username == user.username %}
-                <ul class="actions special edit-book-button">
-                    <li><a href="{% url 'edit_book' book.slug %}" class="button small">Edit Book</a></li>
-                    <li><a href="{% url 'delete_book' book.slug %}" class="button small delete">Delete Book</a></li>
-                </ul>
-                {% endif %}
+        {% if book.author.username == user.username %}
+        <ul class="actions special edit-book-button">
+            <li><a href="{% url 'edit_book' book.slug %}" class="button small">Edit Book</a></li>
+            <li><a href="{% url 'delete_book' book.slug %}" class="button small delete">Delete Book</a></li>
+        </ul>
+        {% endif %}
 
-                <h2 class="book-title"><a href="#">{{ book.title }}</a></h2>
-            </header>
-            {% if book.image %}
-            <div class="image main book"><img src="{{ book.image.url }}" alt="book image" /></div>
-            {% else %}
-            <div class="image main book"><img src="{% static 'books/images/default_book_image.jpg' %}" alt="book image" /></div>
-            {% endif %}
-            <p> {{ book.description|linebreaks }}</p>
-        </section>
+        <h2 class="book-title"><a href="#">{{ book.title }}</a></h2>
+    </header>
+    {% if book.image %}
+    <div class="image main book"><img src="{{ book.image.url }}" alt="book image"/></div>
+    {% else %}
+    <div class="image main book"><img src="{% static 'books/images/default_book_image.jpg' %}" alt="book image"/></div>
+    {% endif %}
+    <p> {{ book.description|linebreaks }}</p>
+</section>
 
 {% endblock %}
 
 <!-- Tags to a certain book-->
 {% block breadcrumbs %}
-    {% with book.genres.all as book_genres %}
-        {% if book_genres %}
-            <ul class="icons alt">
-                <p class="book_genre">This book belongs to the genres:</p>
-                {% for genre in book_genres|dictsort:"genre" %}
-                <li><a class="genres" href="{{ genre.get_absolute_url }}">{{ genre.genre }}</a></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+{% with book.genres.all as book_genres %}
+{% if book_genres %}
+<ul class="icons alt">
+    <p class="book_genre">This book belongs to the genres:</p>
+    {% for genre in book_genres|dictsort:"genre" %}
+    <li><a class="genres" href="{{ genre.get_absolute_url }}">{{ genre.genre }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+{% block commentary %}
+<!-- Comment Form -->
+{% if not user.is_authenticated %}
+<section class="comment-form">
+    <form action="{% url 'users:login' %}" method="post">
+        <h3>Leave a Comment</h3>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Submit Comment</button>
+    </form>
+</section>
+{% else %}
+<section class="comment-form">
+    <h3>Leave a Comment</h3>
+    <form action="{% url 'book' book.slug %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Submit Comment</button>
+    </form>
+</section>
+{% endif %}
+
+<!-- Comments Section -->
+<section class="comments">
+    <h3>Comments ({{ comments|length }})</h3>
+    {% if book.comments %}
+    <ul class="comment-list">
+        {% for comment in comments_page %}
+        <div class="comment-wrapper">
+            <li class="comment">
+                <div class="comment-author-date">
+                    <p class="comment-header">
+                        {{ comment.author.username|default:"Unknown" }} |
+                        {{ comment.created_at|date:"M" }} {{ comment.created_at.day }}, {{ comment.created_at.year }}
+                    </p>
+                </div>
+                <div class="comment-text">
+                    <p class="comment-body">{{ comment.content|linebreaks }}</p>
+                </div>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No comments yet.</p>
+    {% endif %}
+
+    {% block commentary_pagination %}
+    <footer class="center-footer">
+        <!-- Pagination -->
+        <div class="pagination">
+            {% if comments_page.has_other_pages %}
+
+            {% if comments_page.has_previous %}
+            <a href="?page={{ comments_page.previous_page_number }} " class="previous">Prev</a>
+            {% endif %}
+
+            {% for current_number_page in comments_page.paginator.page_range %}
+            {% if comments_page.number == current_number_page %}
+            <a href="?page={{ current_number_page }}" class="page active">{{ current_number_page }}</a>
+            {% elif current_number_page >= comments_page.number|add:-2 and current_number_page <=
+            comments_page.number|add:2 %}
+            <a href="?page={{ current_number_page }}" class="page">{{ current_number_page }}</a>
+            {% elif comments_page.number > 2 or comments_page.number < 2%}
+            <span class="extra">&hellip;</span>
+            {% endif %}
+            {% endfor %}
+
+            {% if comments_page.has_next %}
+            <a href="?page={{ comments_page.next_page_number }} " class="next">Next</a>
+            {% endif %}
+
+            {% endif %}
+        </div>
+    </footer>
+    {% endblock %}
+
+</section>
 {% endblock %}
 

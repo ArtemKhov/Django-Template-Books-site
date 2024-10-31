@@ -2964,6 +2964,39 @@ input, select, textarea {
         padding: 2rem 4rem 0rem 4rem;
     }
 
+/* Comment section */
+    .comment-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .comment-wrapper {
+        border: 1px solid #DCDADA;
+        margin-bottom: 10px;
+    }
+
+    .comment-author-date {
+        color: gray;
+        border-bottom: 1px solid #DCDADA;
+    }
+
+    .comment-header {
+        margin: 0 10px;
+        font-size: 12px;
+    }
+
+    .comment-text {
+        word-wrap: break-word;
+        margin: 0 10px;
+    }
+
+    .comment-body {
+        margin: 0px;
+    }
+
+    .center-footer {
+        text-align: center;
+    }
 
 /* Login */
     .login-block {
@@ -3200,10 +3233,6 @@ input, select, textarea {
 				}
 
 		@media screen and (max-width: 980px) {
-
-			header br {
-				display: none;
-			}
 
 		}
 

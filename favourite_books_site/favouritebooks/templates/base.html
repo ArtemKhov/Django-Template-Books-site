@@ -26,6 +26,11 @@
             <div id="main">
 			    {% block content %}{% endblock %}
                 {% block breadcrumbs %}{% endblock %}
+
+                {% block commentary %}
+                    {% block commentary_pagination %}{% endblock %}
+                {% endblock %}
+
                 {% block pagination %}{% endblock %}
             </div>
 

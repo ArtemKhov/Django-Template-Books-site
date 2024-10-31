@@ -1,8 +1,10 @@
 from captcha.fields import CaptchaField
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import Book, Genres
+from .models import Book, Genres, Comment
+
 
 class AddBookForm(forms.ModelForm):
     genres = forms.ModelMultipleChoiceField(queryset=Genres.objects.all().order_by('genre'),
@@ -30,6 +32,7 @@ class AddBookForm(forms.ModelForm):
 
         return title
 
+
 class FeedbackForm(forms.Form):
     name = forms.CharField(label='Name',
                            max_length=255,
@@ -39,3 +42,22 @@ class FeedbackForm(forms.Form):
     content = forms.CharField(label='Message',
                               widget=forms.Textarea(attrs={'placeholder': 'Provide feedback in this field'}))
     captcha = CaptchaField()
+
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'placeholder': 'Add comment ...',
+                                             'style': 'height: 150px;'})
+        }
+        labels = {
+            'content': '',
+        }
+
+    def save(self, commit=True):
+        comment = super(CommentCreateForm, self).save(commit=False)
+        if commit:
+            comment.save()
+        return comment

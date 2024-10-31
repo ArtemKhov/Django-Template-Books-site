@@ -13,6 +13,7 @@ class Book(models.Model):
     '''
     Book info
     '''
+
     class Status(models.IntegerChoices):
         PUBLISHED = 1, 'Published (available for all to view)'
         DRAFT = 0, 'Not published (available only you)'
@@ -62,6 +63,7 @@ class Book(models.Model):
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
 
+
 class Genres(models.Model):
     genre = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
@@ -82,4 +84,27 @@ class Genres(models.Model):
         super().save(*args, **kwargs)
 
 
+class Comment(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(get_user_model(), related_name='comment_likes', blank=True)
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    is_deleted = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.author} - {self.content}"
+
+    class Meta:
+        ordering = ['-created_at']
+
+
+class LikedComment(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.comment}"
