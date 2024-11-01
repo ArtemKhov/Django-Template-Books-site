@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
     JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView, DeleteView, CreateView
 
@@ -114,6 +115,25 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, View):
     def test_func(self):
         comment = get_object_or_404(Comment, id=self.kwargs['comment_id'])
         return self.request.user == comment.author or self.request.user.is_staff
+
+@method_decorator(login_required, name='dispatch')
+class LikeCommentView(View):
+    def post(self, request, *args, **kwargs):
+        comment_id = kwargs.get('comment_id')
+        comment = get_object_or_404(Comment, id=comment_id)
+        user = request.user
+
+        if comment.likes.filter(id=user.id).exists():
+            comment.likes.remove(user)
+            liked = False
+        else:
+            comment.likes.add(user)
+            liked = True
+
+        return JsonResponse({
+            'liked': liked,
+            'likes_count': comment.likes.count()
+        })
 
 class BookEdit(DataMixin, UpdateView):
     model = Book

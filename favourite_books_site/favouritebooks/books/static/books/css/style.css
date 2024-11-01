@@ -2975,9 +2975,24 @@ input, select, textarea {
         margin-bottom: 10px;
     }
 
+    .comment-actions {
+        width: fit-content;
+    }
+
+    .like-button {
+        display: flex;
+        align-items: center;
+    }
+
+    .like-count {
+        margin-left: 5px;
+    }
+
     .comment-author-date {
         color: gray;
         border-bottom: 1px solid #DCDADA;
+        display: flex;
+        align-items: center;
     }
 
     .comment-header {

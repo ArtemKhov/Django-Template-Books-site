@@ -11,6 +11,7 @@ urlpatterns = [
     path('my-books/tag/<str:tag_slug>/', views.UserBooksByGenres.as_view(), name='user_books_by_tag'),
     path('book/<slug:book_slug>/', views.DetailedBookInfo.as_view(), name='book'),
     path('comment/<int:comment_id>/delete/', views.DeleteCommentView.as_view(), name='delete_comment'),
+    path('comment/<int:comment_id>/like/',views.LikeCommentView.as_view(), name='like_comment'),
     path('edit/<slug:book_slug>/', views.BookEdit.as_view(), name='edit_book'),
     path('edit-success/', views.BookEditSuccess.as_view(), name='edit_success'),
     path('delete/<slug:book_slug>/', views.BookDelete.as_view(), name='delete_book'),

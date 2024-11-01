@@ -83,12 +83,24 @@
                 <div class="comment-author-date">
                     <p class="comment-header">
                         {{ comment.author.username|default:"Unknown" }} |
-                        {{ comment.created_at|date:"M" }} {{ comment.created_at.day }}, {{ comment.created_at.year }}
+                        {{ comment.created_at|date:"M" }} {{ comment.created_at.day }}, {{ comment.created_at.year }} |
+                        <div class="comment-actions">
+                            <span data-comment-id="{{ comment.id }}" class="like-button">
+                                {% if user in comment.likes.all %}
+                                <img src="{% static 'books/images/liked.png' %}" alt="Liked" width="20" height="20">
+                                {% else %}
+                                <img src="{% static 'books/images/not_liked.png' %}" alt="Not liked" width="20" height="20">
+                                {% endif %}
+                                <span class="like-count">{{ comment.likes.count }}</span>
+                            </span>
+                        </div>
                     </p>
                 </div>
                 <div class="comment-text">
                     <p class="comment-body">{{ comment.content|linebreaks }}</p>
+
                 </div>
+
                 {% if comment.author == request.user or request.user.is_staff %}
                 <form action="{% url 'delete_comment' comment_id=comment.id %}"
                       method="post"
@@ -121,7 +133,8 @@
             {% for current_number_page in comments_page.paginator.page_range %}
             {% if comments_page.number == current_number_page %}
             <a href="?page={{ current_number_page }}" class="page active">{{ current_number_page }}</a>
-            {% elif current_number_page >= comments_page.number|add:-2 and current_number_page <= comments_page.number|add:2 %}
+            {% elif current_number_page >= comments_page.number|add:-2 and current_number_page <=
+            comments_page.number|add:2 %}
             <a href="?page={{ current_number_page }}" class="page">{{ current_number_page }}</a>
             {% elif comments_page.number > 2 or comments_page.number < 2%}
             <span class="extra">&hellip;</span>
@@ -136,7 +149,6 @@
         </div>
     </footer>
     {% endblock %}
-
 </section>
 {% endblock %}
 

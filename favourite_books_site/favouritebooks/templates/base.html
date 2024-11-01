@@ -15,7 +15,9 @@
 		<noscript><link rel="stylesheet" href="{% static 'books/css/noscript.css' %}" /></noscript>
     </head>
 
-	<body class="is-preload">
+	<body class="is-preload"
+          data-liked-image-url="{% static 'books/images/liked.png' %}"
+          data-not-liked-image-url="{% static 'books/images/not_liked.png' %}">
 
 		<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
@@ -28,14 +30,13 @@
                 {% block breadcrumbs %}{% endblock %}
 
                 {% block commentary %}
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     {% block commentary_pagination %}{% endblock %}
                 {% endblock %}
 
                 {% block pagination %}{% endblock %}
             </div>
-
 			{% include 'includes/footer.html' %}
-
 		</div>
 
 		<!-- Scripts -->
@@ -48,6 +49,7 @@
         <script src="{% static 'books/js/main.js' %}"></script>
         <script src="{% static 'books/js/upload_file.js' %}"></script>
         <script src="{% static 'books/js/multiSelectWithoutCtrl.js' %}"></script>
+        <script src="{% static 'books/js/like_comment.js' %}"></script>
 	</body>
 
 </html>
