@@ -122,4 +122,4 @@ Further you can fill the site with data at your discretion to understand how eve
 
 ## License
 
-Each file included in this repository is licensed under the [MIT License]().
+Each file included in this repository is licensed under the [MIT License](https://github.com/ArtemKhov/FavouriteBooks/blob/main/LICENSE.txt).
