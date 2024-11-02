@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'favouritebooks.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'favouritebooks_db',
+        'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('USER_PG'),
         'PASSWORD': os.getenv('PASSWORD_PG'),
         'HOST': os.getenv('HOST_PG'),
