@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Count
 
-from books.models import Genres, Book
+from books.models import Book, Genres
 
 register = template.Library()
 

@@ -3,9 +3,7 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-
 {% block content %}
-
 <!-- Book Detailed Info -->
 <section class="post">
     <header class="major">
@@ -84,16 +82,17 @@
                     <p class="comment-header">
                         {{ comment.author.username|default:"Unknown" }} |
                         {{ comment.created_at|date:"M" }} {{ comment.created_at.day }}, {{ comment.created_at.year }} |
-                        <div class="comment-actions">
+                    <div class="comment-actions">
                             <span data-comment-id="{{ comment.id }}" class="like-button">
                                 {% if user in comment.likes.all %}
                                 <img src="{% static 'books/images/liked.png' %}" alt="Liked" width="20" height="20">
                                 {% else %}
-                                <img src="{% static 'books/images/not_liked.png' %}" alt="Not liked" width="20" height="20">
+                                <img src="{% static 'books/images/not_liked.png' %}" alt="Not liked" width="20"
+                                     height="20">
                                 {% endif %}
                                 <span class="like-count">{{ comment.likes.count }}</span>
                             </span>
-                        </div>
+                    </div>
                     </p>
                 </div>
                 <div class="comment-text">

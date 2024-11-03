@@ -1,18 +1,18 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from django.core import serializers
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import EmailMessage
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
-    JsonResponse
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import (Http404, HttpResponseNotFound, HttpResponseRedirect,
+                         JsonResponse)
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView, DeleteView, CreateView
+from django.views.generic import (DeleteView, DetailView, FormView, ListView,
+                                  TemplateView, UpdateView)
 
-from books.forms import AddBookForm, FeedbackForm, CommentCreateForm
-from books.models import Book, Genres, Comment
+from books.forms import AddBookForm, CommentCreateForm, FeedbackForm
+from books.models import Book, Comment, Genres
 from books.utils import DataMixin
 from favouritebooks import settings
 
