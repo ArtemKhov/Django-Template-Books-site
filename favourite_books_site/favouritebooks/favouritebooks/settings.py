@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ENABLE_DEBUG_TOOLBAR = DEBUG and "test" not in sys.argv
+ENABLE_DEBUG_TOOLBAR = DEBUG and "style.css" not in sys.argv
 if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS += [
         'debug_toolbar',
