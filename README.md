@@ -1,4 +1,4 @@
-# Django Favourite Books site 
+# Django Template site (Favourite Books)
 
 A website that allows you to save your favorite books and leave a small review of them. Written with `python3.11`, `Django5.1.1` and uses modern `HTML/CSS/JS`.
 
