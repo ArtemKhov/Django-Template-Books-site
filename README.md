@@ -1,4 +1,4 @@
-# Django Favourite Books site 
+# Django Template site (Favourite Books)
 
 A website that allows you to save your favorite books and leave a small review of them. Written with `python3.11`, `Django5.1.1` and uses modern `HTML/CSS/JS`.
 
@@ -119,6 +119,12 @@ Execute: `python manage.py runserver`
 Open up a browser and visit: http://127.0.0.1:8000/ , the you will see the site.
 
 Further you can fill the site with data at your discretion to understand how everything looks like (admin panel can also help) or you can see the approximate filling of the site in the folder Demo.
+
+## Demo
+![home_page](https://github.com/user-attachments/assets/ecb7914f-121e-41f9-9036-2c8b2bde2183)
+![all_books](https://github.com/user-attachments/assets/968f93e5-0f57-4767-9e11-e63d470e6237)
+
+
 
 ## License
 
