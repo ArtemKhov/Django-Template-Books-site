@@ -1,6 +1,10 @@
+import logging
+
 from django.contrib import admin, messages
 
 from .models import Book, Comment, Genres
+
+logger = logging.getLogger(__name__)
 
 
 @admin.register(Book)
@@ -33,6 +37,7 @@ class BookAdmin(admin.ModelAdmin):
         """
         count = queryset.update(is_published=Book.Status.PUBLISHED)
         self.message_user(request, f'Change {count} entries.')
+        logger.info(f"Admin {request.user} published {count} books.")
 
     @admin.action(description='Unpublish selected Books')
     def set_draft(self, request, queryset):
@@ -41,6 +46,7 @@ class BookAdmin(admin.ModelAdmin):
         """
         count = queryset.update(is_published=Book.Status.DRAFT)
         self.message_user(request, f'{count} books withdrawn from publication.', messages.WARNING)
+        logger.info(f"Admin {request.user} unpublished {count} books.")
 
 
 @admin.register(Genres)

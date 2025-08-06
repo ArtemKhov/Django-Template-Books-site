@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import EmailMessage
@@ -15,6 +16,8 @@ from books.forms import AddBookForm, CommentCreateForm, FeedbackForm
 from books.models import Book, Comment, Genres
 from books.utils import DataMixin
 from favouritebooks import settings
+
+logger = logging.getLogger(__name__)
 
 
 class BookMainPage(DataMixin, TemplateView):
@@ -72,6 +75,7 @@ class AddBook(LoginRequiredMixin, DataMixin, FormView):
         new_book = form.save(commit=False)
         new_book.author = self.request.user
         form.save()
+        logger.info(f"Book '{new_book.title}' added by user {self.request.user}")
         return super().form_valid(form)
 
 
@@ -123,8 +127,10 @@ class DetailedBookInfo(DataMixin, DetailView):
             comment.book = book
             comment.author = request.user
             comment.save()
+            logger.info(f"Comment added to book '{book.title}' by user {request.user}")
             return HttpResponseRedirect(reverse_lazy('book', kwargs={'book_slug': book_slug}))
         else:
+            logger.warning(f"Invalid comment form submission by user {request.user}")
             context = self.get_context_data()
             context['form'] = form
             return self.render_to_response(context)
@@ -135,6 +141,7 @@ class DetailedBookInfo(DataMixin, DetailView):
         """
         book = self.get_object()
         if book.is_published != 1 and book.author != self.request.user:
+            logger.warning(f"Unauthorized access attempt to unpublished book '{book.title}' by user {self.request.user}")
             raise Http404("Access denied")
         return super(DetailedBookInfo, self).dispatch(request, *args, **kwargs)
 
@@ -148,8 +155,10 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, View):
         """
         comment = get_object_or_404(Comment, id=kwargs['comment_id'])
         if comment.author == request.user or request.user.is_staff:
+            logger.info(f"Comment (id={comment.id}) deleted by user {request.user}")
             comment.delete()
-
+        else:
+            logger.warning(f"Unauthorized comment delete attempt by user {request.user}")
         current_page_number = request.GET.get('page', 1)
         redirect_url = f"{reverse_lazy('book', kwargs={'book_slug': comment.book.slug})}?page={current_page_number}"
         return redirect(redirect_url)
@@ -260,12 +269,10 @@ class Feedback(LoginRequiredMixin, DataMixin, FormView):
         """
         Sends feedback email to the site admin.
         """
-        # print(form.cleaned_data)
-
         user_email = form.cleaned_data.get('email')
         user_name = form.cleaned_data.get('name')
         user_message = form.cleaned_data.get('content')
-
+        logger.info(f"Feedback submitted by user {user_name} <{user_email}>")
         subject = f'Feedback from {user_email}'
         message = f'User name: {user_name}\nEmail: {user_email}\nMessage: {user_message}'
 

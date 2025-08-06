@@ -1,7 +1,11 @@
+import logging
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django_unique_slugify import unique_slugify
+
+
+logger = logging.getLogger(__name__)
 
 
 class PublishedManager(models.Manager):
@@ -76,6 +80,7 @@ class Book(models.Model):
         slug_str = self.title
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
+        logger.info(f"Book '{self.title}' saved/updated (id={self.id})")
 
 
 class Genres(models.Model):
@@ -108,6 +113,7 @@ class Genres(models.Model):
         slug_str = self.genre
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
+        logger.info(f"Genre '{self.genre}' saved/updated (id={self.id})")
 
 
 class Comment(models.Model):
@@ -132,6 +138,13 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def save(self, *args, **kwargs):
+        """
+        Overridden save method for Comment
+        """
+        super().save(*args, **kwargs)
+        logger.info(f"Comment by '{self.author}' on book id={self.book.id} saved/updated (id={self.id})")
+
 
 class LikedComment(models.Model):
     """
@@ -146,3 +159,10 @@ class LikedComment(models.Model):
         String representation of the LikedComment object (shows user and comment).
         """
         return f"{self.user} - {self.comment}"
+
+    def save(self, *args, **kwargs):
+        """
+        Overridden save method for LikedComment
+        """
+        super().save(*args, **kwargs)
+        logger.info(f"LikedComment by '{self.user}' on comment id={self.comment.id} saved/updated (id={self.id})")

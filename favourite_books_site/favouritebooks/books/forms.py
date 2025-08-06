@@ -1,8 +1,11 @@
+import logging
 from captcha.fields import CaptchaField
 from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Book, Comment, Genres
+
+logger = logging.getLogger(__name__)
 
 
 class AddBookForm(forms.ModelForm):
@@ -33,8 +36,9 @@ class AddBookForm(forms.ModelForm):
         title = self.cleaned_data['title']
         title_length = 100
         if len(title) > title_length:
+            logger.warning(f"Book title too long: '{title}' (length={len(title)})")
             raise ValidationError(f'The length of the Book name cannot exceed {title_length} characters')
-
+        logger.info(f"Validated book title: '{title}'")
         return title
 
 
@@ -74,4 +78,5 @@ class CommentCreateForm(forms.ModelForm):
         comment = super(CommentCreateForm, self).save(commit=False)
         if commit:
             comment.save()
+            logger.info(f"Comment saved via form by user {comment.author}")
         return comment
