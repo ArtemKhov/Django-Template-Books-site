@@ -18,36 +18,57 @@ from favouritebooks import settings
 
 
 class BookMainPage(DataMixin, TemplateView):
+    """
+    View for the main page of the Favourite Books site.
+    """
     template_name = 'books/index.html'
     page_title = 'Favourite Books'
 
 
 class AllPublishedBooks(DataMixin, ListView):
+    """
+    View to display all published books.
+    """
     template_name = 'books/books.html'
     context_object_name = 'books'
     page_title = 'All Books'
 
     def get_queryset(self):
+        """
+        Returns queryset of all published books.
+        """
         return Book.objects.filter(is_published=1)
 
 
 class UserBooks(LoginRequiredMixin, DataMixin, ListView):
+    """
+    View to display books added by the current user.
+    """
     template_name = 'books/user_books.html'
     context_object_name = 'books'
     page_title = 'My Books'
 
     def get_queryset(self):
+        """
+        Returns queryset of books authored by the current user.
+        """
         user = self.request.user
         return Book.objects.filter(author=user)
 
 
 class AddBook(LoginRequiredMixin, DataMixin, FormView):
+    """
+    View to handle adding a new book by a logged-in user.
+    """
     form_class = AddBookForm
     template_name = 'books/add_book.html'
     page_title = 'Add new book'
     success_url = reverse_lazy('user_books')
 
     def form_valid(self, form):
+        """
+        Called when submitted form is valid. Sets the author to the current user.
+        """
         new_book = form.save(commit=False)
         new_book.author = self.request.user
         form.save()
@@ -55,12 +76,18 @@ class AddBook(LoginRequiredMixin, DataMixin, FormView):
 
 
 class DetailedBookInfo(DataMixin, DetailView):
+    """
+    View to display detailed information about a book, including comments and comment form.
+    """
     template_name = 'books/book_info.html'
     slug_url_kwarg = 'book_slug'
     context_object_name = 'book'
     form_class = CommentCreateForm
 
     def get_context_data(self, **kwargs):
+        """
+        Adds comments and comment form to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class()
 
@@ -79,9 +106,15 @@ class DetailedBookInfo(DataMixin, DetailView):
 
     # Return book's slug according to url (book/<slug:book_slug>/)
     def get_object(self, queryset=None):
+        """
+        Returns the Book object based on the slug from the URL.
+        """
         return get_object_or_404(Book, slug=self.kwargs[self.slug_url_kwarg])
 
     def post(self, request, *args, **kwargs):
+        """
+        Handles posting a new comment to the book.
+        """
         form = self.form_class(request.POST)
         if form.is_valid():
             book_slug = self.kwargs[self.slug_url_kwarg]
@@ -97,13 +130,22 @@ class DetailedBookInfo(DataMixin, DetailView):
             return self.render_to_response(context)
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        Restricts access to unpublished books to the author only.
+        """
         book = self.get_object()
         if book.is_published != 1 and book.author != self.request.user:
             raise Http404("Access denied")
         return super(DetailedBookInfo, self).dispatch(request, *args, **kwargs)
 
 class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, View):
+    """
+    View to handle deletion of a comment by its author or an admin.
+    """
     def post(self, request, *args, **kwargs):
+        """
+        Deletes the comment if the user is the author or staff.
+        """
         comment = get_object_or_404(Comment, id=kwargs['comment_id'])
         if comment.author == request.user or request.user.is_staff:
             comment.delete()
@@ -113,12 +155,21 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, View):
         return redirect(redirect_url)
 
     def test_func(self):
+        """
+        Checks if the current user is allowed to delete the comment.
+        """
         comment = get_object_or_404(Comment, id=self.kwargs['comment_id'])
         return self.request.user == comment.author or self.request.user.is_staff
 
 @method_decorator(login_required, name='dispatch')
 class LikeCommentView(View):
+    """
+    View to handle liking and unliking comments via AJAX.
+    """
     def post(self, request, *args, **kwargs):
+        """
+        Handles the like/unlike logic for a comment.
+        """
         comment_id = kwargs.get('comment_id')
         comment = get_object_or_404(Comment, id=comment_id)
         user = request.user
@@ -136,6 +187,9 @@ class LikeCommentView(View):
         })
 
 class BookEdit(DataMixin, UpdateView):
+    """
+    View to handle editing a book by its author.
+    """
     model = Book
     form_class = AddBookForm
     slug_url_kwarg = 'book_slug'
@@ -143,10 +197,16 @@ class BookEdit(DataMixin, UpdateView):
     success_url = reverse_lazy('edit_success')
 
     def get_context_data(self, **kwargs):
+        """
+        Adds context for the edit book page.
+        """
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=f'Edit book: {context["book"].title}')
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        Restricts editing to the book's author only.
+        """
         book = self.get_object()
         if book.author != self.request.user:
             raise Http404("You are not allowed to edit this Book")
@@ -154,21 +214,33 @@ class BookEdit(DataMixin, UpdateView):
 
 
 class BookEditSuccess(DataMixin, TemplateView):
+    """
+    View to display a success message after editing a book.
+    """
     template_name = 'books/edit_book_success.html'
     page_title = 'Success'
 
 
 class BookDelete(DataMixin, DeleteView):
+    """
+    View to handle deleting a book by its author.
+    """
     model = Book
     slug_url_kwarg = 'book_slug'
     template_name = 'books/delete_book.html'
     success_url = reverse_lazy('books')
 
     def get_context_data(self, **kwargs):
+        """
+        Adds context for the delete book page.
+        """
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=f'Delete book: {context["book"].title}')
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        Restricts deletion to the book's author only.
+        """
         book = self.get_object()
         if book.author != self.request.user:
             raise Http404("You are not allowed to delete this Book")
@@ -176,12 +248,18 @@ class BookDelete(DataMixin, DeleteView):
 
 
 class Feedback(LoginRequiredMixin, DataMixin, FormView):
+    """
+    View to handle feedback form submission by logged-in users.
+    """
     form_class = FeedbackForm
     template_name = 'books/feedback.html'
     page_title = 'Feedback'
     success_url = reverse_lazy('feedback_success')
 
     def form_valid(self, form):
+        """
+        Sends feedback email to the site admin.
+        """
         # print(form.cleaned_data)
 
         user_email = form.cleaned_data.get('email')
@@ -203,34 +281,55 @@ class Feedback(LoginRequiredMixin, DataMixin, FormView):
 
 
 class FeedbackSuccess(DataMixin, TemplateView):
+    """
+    View to display a success message after feedback submission.
+    """
     template_name = 'books/feedback_success.html'
     page_title = 'Success'
 
 
 class BookGenres(DataMixin, ListView):
+    """
+    View to display books filtered by a specific genre.
+    """
     template_name = 'books/books.html'
     context_object_name = 'books'
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Adds context for the genre page.
+        """
         context = super().get_context_data(**kwargs)
         tag = Genres.objects.get(slug=self.kwargs['tag_slug'])
         return self.get_mixin_context(context, title='Genre: ' + tag.genre)
 
     def get_queryset(self):
+        """
+        Returns queryset of published books filtered by genre.
+        """
         return Book.published.filter(genres__slug=self.kwargs['tag_slug']).prefetch_related('genres')
 
 
 class UserBooksByGenres(LoginRequiredMixin, DataMixin, ListView):
+    """
+    View to display user's books filtered by a specific genre.
+    """
     template_name = 'books/user_books.html'
     context_object_name = 'books'
 
     def get_queryset(self):
+        """
+        Returns queryset of user's books filtered by genre.
+        """
         user = self.request.user
         genre_slug = self.kwargs.get('tag_slug')
         # Filter books by user and selected genre
         return Book.objects.filter(author=user, genres__slug=genre_slug)
 
     def get_context_data(self, **kwargs):
+        """
+        Adds context for the user's books by genre page.
+        """
         context = super().get_context_data(**kwargs)
         context['tags'] = Genres.objects.filter(
             id__in=Book.objects.filter(author=self.request.user).values_list('genres', flat=True)).distinct()
@@ -239,4 +338,7 @@ class UserBooksByGenres(LoginRequiredMixin, DataMixin, ListView):
 
 
 def page_not_found(request, exception):
+    """
+    Custom 404 error handler.
+    """
     return HttpResponseNotFound('<h1>Page not found</h1>')

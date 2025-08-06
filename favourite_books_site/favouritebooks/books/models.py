@@ -5,15 +5,20 @@ from django_unique_slugify import unique_slugify
 
 
 class PublishedManager(models.Manager):
+    """
+    Custom manager to return only published books.
+    """
     def get_queryset(self):
+        """
+        Returns queryset filtered to only include published books.
+        """
         return super().get_queryset().filter(is_published=Book.Status.PUBLISHED)
 
 
 class Book(models.Model):
-    '''
-    Book info
-    '''
-
+    """
+    Model representing a book with title, description, publication status, genres, image, and author.
+    """
     class Status(models.IntegerChoices):
         PUBLISHED = 1, 'Published (available for all to view)'
         DRAFT = 0, 'Not published (available only you)'
@@ -45,6 +50,9 @@ class Book(models.Model):
     published = PublishedManager()
 
     def __str__(self):
+        """
+        String representation of the Book object (returns the title).
+        """
         return self.title
 
     class Meta:
@@ -56,19 +64,31 @@ class Book(models.Model):
         ]
 
     def get_absolute_url(self):
+        """
+        Returns the URL to access a detail page for this book.
+        """
         return reverse('book', kwargs={'book_slug': self.slug})
 
     def save(self, *args, **kwargs):
+        """
+        Overridden save method to generate a unique slug from the book title.
+        """
         slug_str = self.title
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
 
 
 class Genres(models.Model):
+    """
+    Model representing a genre/tag for books.
+    """
     genre = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
 
     def __str__(self):
+        """
+        String representation of the Genre object (returns the genre name).
+        """
         return self.genre
 
     class Meta:
@@ -76,15 +96,24 @@ class Genres(models.Model):
         verbose_name_plural = 'Genres'
 
     def get_absolute_url(self):
+        """
+        Returns the URL to access a list of books with this genre.
+        """
         return reverse('tag', kwargs={'tag_slug': self.slug})
 
     def save(self, *args, **kwargs):
+        """
+        Overridden save method to generate a unique slug from the genre name.
+        """
         slug_str = self.genre
         unique_slugify(self, slug_str)
         super().save(*args, **kwargs)
 
 
 class Comment(models.Model):
+    """
+    Model representing a comment on a book, with support for likes and nested replies.
+    """
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     content = models.TextField(max_length=500)
@@ -95,6 +124,9 @@ class Comment(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
+        """
+        String representation of the Comment object (shows author and content).
+        """
         return f"{self.author} - {self.content}"
 
     class Meta:
@@ -102,9 +134,15 @@ class Comment(models.Model):
 
 
 class LikedComment(models.Model):
+    """
+    Model representing a like on a comment by a user.
+    """
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
+        """
+        String representation of the LikedComment object (shows user and comment).
+        """
         return f"{self.user} - {self.comment}"

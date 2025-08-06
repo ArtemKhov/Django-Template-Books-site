@@ -6,6 +6,9 @@ from .models import Book, Comment, Genres
 
 
 class AddBookForm(forms.ModelForm):
+    """
+    Form for adding a new book, including title, description, publication status, genres, and image.
+    """
     genres = forms.ModelMultipleChoiceField(queryset=Genres.objects.all().order_by('genre'),
                                     required=False,
                                     label='Genres',
@@ -24,6 +27,9 @@ class AddBookForm(forms.ModelForm):
         }
 
     def clean_title(self):
+        """
+        Validates that the book title does not exceed the maximum allowed length.
+        """
         title = self.cleaned_data['title']
         title_length = 100
         if len(title) > title_length:
@@ -33,6 +39,9 @@ class AddBookForm(forms.ModelForm):
 
 
 class FeedbackForm(forms.Form):
+    """
+    Form for submitting feedback, including name, email, message, and captcha.
+    """
     name = forms.CharField(label='Name',
                            max_length=255,
                            widget=forms.TextInput(attrs={'placeholder': 'Your name'}))
@@ -44,6 +53,9 @@ class FeedbackForm(forms.Form):
 
 
 class CommentCreateForm(forms.ModelForm):
+    """
+    Form for creating a comment on a book.
+    """
     class Meta:
         model = Comment
         fields = ['content']
@@ -56,6 +68,9 @@ class CommentCreateForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
+        """
+        Saves the comment instance. If commit is True, saves to the database.
+        """
         comment = super(CommentCreateForm, self).save(commit=False)
         if commit:
             comment.save()
