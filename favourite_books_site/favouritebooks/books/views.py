@@ -117,8 +117,10 @@ class DetailedBookInfo(DataMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         """
-        Handles posting a new comment to the book.
+        Handles posting a new comment to the book. Requires authentication.
         """
+        if not request.user.is_authenticated:
+            return redirect('users:login')
         form = self.form_class(request.POST)
         if form.is_valid():
             book_slug = self.kwargs[self.slug_url_kwarg]

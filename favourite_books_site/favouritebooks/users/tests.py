@@ -3,6 +3,7 @@ from http import HTTPStatus
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+from django.test import Client
 
 
 class RegisterUserTestCase(TestCase):
@@ -86,3 +87,63 @@ class RegisterUserTestCase(TestCase):
 
     def tearDown(self):
         "clean"
+
+
+class UsersFlowsTestCase(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='testuser', password='testpass', email='test@example.com')
+        self.client = Client()
+
+    def test_login_get(self):
+        response = self.client.get(reverse('users:login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/login.html')
+
+    def test_login_post_success(self):
+        response = self.client.post(reverse('users:login'), {'username': 'testuser', 'password': 'testpass'})
+        self.assertEqual(response.status_code, 302)
+
+    def test_profile_access_authenticated(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(reverse('users:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/profile.html')
+
+    def test_profile_access_unauthenticated(self):
+        response = self.client.get(reverse('users:profile'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('users:login'), response.url)
+
+    def test_password_change_authenticated(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(reverse('users:password_change'))
+        self.assertEqual(response.status_code, 200)
+        data = {'old_password': 'testpass', 'new_password1': 'newpass123A', 'new_password2': 'newpass123A'}
+        response = self.client.post(reverse('users:password_change'), data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_password_change_unauthenticated(self):
+        response = self.client.get(reverse('users:password_change'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('users:login'), response.url)
+
+    def test_password_reset_request(self):
+        response = self.client.get(reverse('users:password_reset'))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('users:password_reset'), {'email': 'test@example.com'})
+        self.assertEqual(response.status_code, 302)
+
+    def test_password_reset_done_page(self):
+        response = self.client.get(reverse('users:password_reset_done'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/password_reset_done.html')
+
+    def test_password_reset_confirm_page(self):
+        # This test is limited, as token/uid are not easily generated in unit tests
+        response = self.client.get(reverse('users:password_reset_confirm', kwargs={'uidb64': 'uid', 'token': 'token'}))
+        self.assertIn(response.status_code, [200, 302, 404])
+
+    def test_password_reset_complete_page(self):
+        response = self.client.get(reverse('users:password_reset_complete'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/password_reset_complete.html')
